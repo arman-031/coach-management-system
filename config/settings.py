@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,11 +23,8 @@ load_dotenv(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# The fallback keeps a fresh local checkout usable; always set SECRET_KEY in deployment.
-SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    "django-insecure-local-development-only-not-for-production-000000000000",
-)
+# Keep local checkouts usable without committing a static signing key.
+SECRET_KEY = os.getenv("SECRET_KEY") or get_random_secret_key()
 
 DEBUG = os.getenv("DEBUG", "False").strip().lower() in {
     "true",

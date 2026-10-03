@@ -167,6 +167,6 @@ Implemented API areas include account registration and JWT authentication, curre
 ## Security Notes
 
 - `.env` and other `.env.*` files are excluded from Git; `.env.example` contains placeholders only.
-- The committed settings do not contain a production secret. Set a private `SECRET_KEY` through the environment before deployment; the built-in fallback is for local development only.
+- No static signing key is committed. If `SECRET_KEY` is absent, Django generates a development key at startup; set a private, stable `SECRET_KEY` through the environment before deployment.
 - Keep database credentials, development credentials, private uploads, and local database files out of commits.
 - `DEBUG` defaults to `False` when it is not explicitly enabled in the environment.
