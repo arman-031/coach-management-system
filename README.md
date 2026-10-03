@@ -1,172 +1,247 @@
-> 🚧 This project is currently under active development. Core backend features are being implemented incrementally.
-
 # Coach Management System
 
-## Overview
+> 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
-Coach Management System is a Persian-first coaching management backend built with Django REST Framework and PostgreSQL. It is designed to support coach and student workflows, with account, student, and exercise APIs implemented so far.
-
-## Project Status
-
-This repository is an active work in progress, not a finished product. Account authentication, student management, and the exercise bank are implemented. Program, payment, and notification workflows, dashboards, automated test coverage, and production deployment are not complete.
-
-## Key Features
-
-- Custom phone-number-based user model with coach and student roles.
-- Registration, JWT login and refresh, and authenticated current-user endpoints.
-- Student profile management and coach-facing student list, detail, update, activate, and deactivate APIs.
-- Exercise and muscle-group models with authenticated coach-facing list and management APIs.
-- A JSON exercise seed dataset containing 100 entries and an import management command.
-- Exercise media records with image, video, and GIF categories, optional thumbnails, and ordering.
-
-## Architecture
-
-The backend uses Django's app structure. `config` owns project settings and URL routing; `accounts`, `students`, and `exercises` separate identity, student profiles, and exercise-bank behavior. Django REST Framework serializers and views define the API, while Django models persist application data in PostgreSQL.
+A **Persian-first coaching management backend** built with Django REST Framework and PostgreSQL. The system is designed for real coach/student workflows, with authentication, student management, and an exercise bank already implemented.
 
 ## Tech Stack
 
-- Python 3.11
-- Django 5.2
-- Django REST Framework
-- PostgreSQL with Psycopg 3
-- JWT authentication with SimpleJWT
-- Git and GitHub
+`Python 3.11` · `Django 5.2` · `Django REST Framework` · `PostgreSQL` · `SimpleJWT` · `Psycopg 3`
 
-## Project Structure
+## Current Status
+
+### Implemented
+- Custom phone-number-based user model with coach and student roles
+- Registration and JWT authentication
+- JWT access/refresh flow
+- Authenticated current-user profile endpoint
+- Student profiles and coach-facing student management APIs
+- Exercise bank with muscle groups
+- Exercise media model with image, video, GIF, thumbnail, and ordering support
+- Coach-facing exercise and muscle-group APIs
+- 100-entry exercise seed dataset
+- Exercise import management command
+- PostgreSQL configuration through environment variables
+- Secret/config isolation with `.env` support
+
+### Planned
+- Program management
+- 45-day program lifecycle rules
+- Program archive/history
+- Bodybuilding, nutrition, and corrective program workflows
+- Payment management
+- Coach payment notifications
+- Inactivity follow-up flow
+- Coach dashboard
+- Student dashboard
+- Automated test coverage
+- Production deployment and external media storage
+
+## Architecture
+
+The backend follows Django's app-based structure:
 
 ```text
 morabi/
-├── accounts/                 # Custom user, registration, permissions, and authentication APIs
-├── config/                   # Django settings and root URL configuration
+├── accounts/                 # Users, roles, registration, authentication
+├── students/                 # Student profiles and coach-facing student APIs
 ├── exercises/
-│   ├── data/                 # Bundled exercise JSON seed data
+│   ├── data/                 # Exercise JSON seed dataset
 │   ├── management/commands/  # Exercise import command
-│   ├── media_seed/           # Seed media used by the import command
-│   ├── migrations/
-│   └── models, serializers, views, and URLs
-├── students/                 # Student profiles and coach-facing APIs
+│   ├── media_seed/           # Small seed/demo media used by the importer
+│   └── ...                   # Models, serializers, views, URLs, migrations
+├── config/                   # Settings and root URL configuration
 ├── manage.py
 ├── requirements.txt
-└── .env.example
+├── .env.example
+└── README.md
 ```
 
-Planned modules that do not exist yet include programs, payments, and notifications.
+Planned modules such as programs, payments, and notifications are intentionally **not** shown as implemented until they actually exist.
 
 ## Authentication
 
-JWT authentication is configured through SimpleJWT. The current account routes are:
+Authentication uses **JWT with SimpleJWT**.
 
-- `POST /api/accounts/register/`
-- `POST /api/accounts/login/`
-- `POST /api/accounts/token/refresh/`
-- `GET` or `PATCH /api/accounts/me/`
+Current account routes include:
 
-Authenticated endpoints use JWT bearer tokens. Coach and student permissions are used to restrict role-specific API areas.
+```text
+POST   /api/accounts/register/
+POST   /api/accounts/login/
+POST   /api/accounts/token/refresh/
+GET    /api/accounts/me/
+PATCH  /api/accounts/me/
+```
+
+Protected endpoints require a bearer token.
+
+## Student Management
+
+The current backend includes student profile support plus coach-facing student operations for:
+
+- Listing students
+- Viewing student details
+- Updating student information
+- Activating students
+- Deactivating students
 
 ## Exercise Bank
 
-The exercise domain currently includes `MuscleGroup`, `Exercise`, and `ExerciseMedia` models. Exercises can reference primary and secondary muscle groups, difficulty, equipment, and common mistakes. The bundled `exercises/data/exercises.json` contains 100 exercise entries, and `python manage.py import_exercises` imports or updates those records and processes available seed media.
+The exercise domain currently includes:
+
+- `MuscleGroup`
+- `Exercise`
+- `ExerciseMedia`
+
+Exercises can include structured information such as muscle groups, difficulty, equipment, common mistakes, and related media.
+
+The repository includes a **100-entry exercise JSON dataset** plus a management command for importing/updating those records:
+
+```bash
+python manage.py import_exercises
+```
 
 ## Media Handling
 
-Exercise media records support image, video, and GIF categories, with an optional image thumbnail and display ordering. The upload field can store files such as WebM videos; the seed data includes a small example video and thumbnail. Uploaded files live under the local `media/` directory, which is ignored by Git. Production media storage and delivery are not configured yet.
+Exercise media supports:
+
+- Images
+- Video
+- GIF
+- Optional thumbnails
+- Display ordering
+
+The full uploaded media library is **not stored in Git**. Local uploaded media is ignored, while lightweight seed/demo assets required for development may remain in the repository.
+
+Production media storage is planned for a dedicated external storage service rather than the Git repository.
 
 ## Business Rules
 
-The following product rules are planned and are not implemented in the current models or API:
+The following product rules are part of the planned system design and are **not yet fully implemented**:
 
-- Programs run for 45 days.
-- Students retain access to previous programs in an archive.
-- Program types include bodybuilding, nutrition, and corrective programs.
+- Program duration: **45 days**
+- Students retain previous programs in an archive
+- Program categories:
+  - Bodybuilding
+  - Nutrition
+  - Corrective
+- Coaches receive payment-related notifications
+- Coaches can review inactive students and decide whether to send follow-up notifications
 
-## Installation
+## Local Setup
 
-1. Clone the repository after the GitHub repository has been created:
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/arman-031/coach-management-system.git
-   cd coach-management-system
-   ```
+```bash
+git clone https://github.com/arman-031/coach-management-system.git
+cd coach-management-system
+```
 
-2. Create and activate a Python 3.11 virtual environment. In PowerShell:
+### 2. Create a Python 3.11 virtual environment
 
-   ```powershell
-   py -3.11 -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
+PowerShell:
 
-3. Install the project dependencies:
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-   ```bash
-   python -m pip install -r requirements.txt
-   ```
+### 3. Install dependencies
 
-4. Copy `.env.example` to `.env`, then replace its placeholders with local configuration values. Never commit `.env`.
+```bash
+python -m pip install -r requirements.txt
+```
 
-5. Create a PostgreSQL database and user, then configure the database variables described below.
+### 4. Configure environment variables
 
-6. Apply migrations and start Django:
+Copy:
 
-   ```bash
-   python manage.py migrate
-   python manage.py runserver
-   ```
+```text
+.env.example
+```
 
-To load the bundled exercise dataset after migrations, run `python manage.py import_exercises`.
+to:
 
-## Environment Variables
+```text
+.env
+```
 
-Configure these values in the local `.env` file. The example file contains placeholders only.
+and replace placeholders with your local values.
+
+Required variables include:
 
 | Variable | Purpose |
 | --- | --- |
-| `SECRET_KEY` | Django signing key; use a private, randomly generated value outside local development. |
-| `DEBUG` | Django debug mode; enable only for local development. |
-| `ALLOWED_HOSTS` | Comma-separated hostnames accepted by Django. |
-| `DB_NAME` | PostgreSQL database name. |
-| `DB_USER` | PostgreSQL username. |
-| `DB_PASSWORD` | PostgreSQL password. |
-| `DB_HOST` | PostgreSQL host, usually `localhost` for local development. |
-| `DB_PORT` | PostgreSQL port, usually `5432`. |
+| `SECRET_KEY` | Django signing key |
+| `DEBUG` | Development debug mode |
+| `ALLOWED_HOSTS` | Allowed Django hosts |
+| `DB_NAME` | PostgreSQL database name |
+| `DB_USER` | PostgreSQL username |
+| `DB_PASSWORD` | PostgreSQL password |
+| `DB_HOST` | PostgreSQL host |
+| `DB_PORT` | PostgreSQL port |
 
-## Database Setup
-
-The project uses PostgreSQL through Psycopg 3. Create a local database and a database user with permission to connect and run migrations, then enter those local values in `.env`. No database credentials are stored in the repository. `db.sqlite3` and database dump files are excluded by `.gitignore`.
-
-## Running the Project
+### 5. Apply migrations
 
 ```bash
-python manage.py check
 python manage.py migrate
+```
+
+### 6. Optional: import the exercise dataset
+
+```bash
+python manage.py import_exercises
+```
+
+### 7. Run the development server
+
+```bash
 python manage.py runserver
 ```
 
-The development API is available under `/api/`; Django admin is available under `/admin/`.
+## Development Checks
 
-## API Development Status
+Useful commands:
 
-Implemented API areas include account registration and JWT authentication, current-user profile access, student profile and coach-facing student management, and coach-facing exercise and muscle-group management. Program, payment, and notification APIs are planned. There is no frontend dashboard in this repository.
+```bash
+python manage.py check
+python manage.py showmigrations
+python manage.py test
+```
+
+At the current project stage, Django's test command runs successfully but the repository does not yet contain meaningful automated test coverage.
 
 ## Roadmap
 
 - [x] Django project setup
-- [x] PostgreSQL configuration through environment variables
+- [x] PostgreSQL configuration
 - [x] Django REST Framework setup
 - [x] JWT authentication
-- [x] Exercise bank models and API
-- [x] Exercise import command and 100-entry JSON dataset
+- [x] User roles and account endpoints
 - [x] Student management API
-- [ ] Program management, including 45-day periods and archived programs
+- [x] Exercise bank models and API
+- [x] Exercise import command
+- [x] 100-entry exercise seed dataset
+- [ ] Program models and APIs
+- [ ] 45-day program lifecycle
+- [ ] Program archive/history
 - [ ] Payment management
-- [ ] Notifications
+- [ ] Notification workflows
 - [ ] Coach dashboard
 - [ ] Student dashboard
 - [ ] Automated tests
-- [ ] Production deployment and media storage
+- [ ] Production deployment
+- [ ] Production media storage
 
-## Security Notes
+## Security
 
-- `.env` and other `.env.*` files are excluded from Git; `.env.example` contains placeholders only.
-- No static signing key is committed. If `SECRET_KEY` is absent, Django generates a development key at startup; set a private, stable `SECRET_KEY` through the environment before deployment.
-- Keep database credentials, development credentials, private uploads, and local database files out of commits.
-- `DEBUG` defaults to `False` when it is not explicitly enabled in the environment.
+- `.env` is ignored and must never be committed
+- `.env.example` contains placeholders only
+- Database credentials are environment-based
+- Local databases, virtual environments, uploaded media, editor files, and dumps are excluded from Git
+- No stable development signing key is committed
+- `DEBUG` defaults to `False` unless explicitly enabled
+
+## Project Goal
+
+This project is being developed as a real-world backend system rather than a one-off tutorial project. The focus is on progressively implementing authentication, domain modeling, business rules, APIs, data imports, media handling, testing, and production-oriented backend practices.
