@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/coach-management-system-hero.svg" alt="Coach Management System" width="100%" />
+</p>
+
 # Coach Management System
 
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
