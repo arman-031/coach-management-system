@@ -59,6 +59,61 @@ morabi/
 
 Planned modules such as programs, payments, and notifications are intentionally **not** shown as implemented until they actually exist.
 
+
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    Client[Client / Postman / Future Frontend]
+    API[Django REST Framework API]
+    Auth[accounts app]
+    Students[students app]
+    Exercises[exercises app]
+    JWT[SimpleJWT]
+    DB[(PostgreSQL)]
+    Media[Local Media / Future External Storage]
+
+    Client -->|HTTP / JSON| API
+    API --> Auth
+    API --> Students
+    API --> Exercises
+
+    Auth --> JWT
+    Auth --> DB
+    Students --> DB
+    Exercises --> DB
+    Exercises --> Media
+
+    JWT -->|Access / Refresh Tokens| Client
+```
+
+The current backend is intentionally modular: authentication and identity live in `accounts`, student-specific behavior lives in `students`, and the exercise library lives in `exercises`. PostgreSQL is the persistent data store, while uploaded media is kept outside Git and can later move to production object storage.
+
+## API Request Flow
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant API as DRF API
+    participant JWT as SimpleJWT
+    participant DB as PostgreSQL
+
+    C->>API: POST /api/accounts/login/
+    API->>DB: Validate user credentials
+    DB-->>API: User record
+    API->>JWT: Create access + refresh tokens
+    JWT-->>C: access + refresh
+
+    C->>API: GET /api/accounts/me/\nAuthorization: Bearer <access>
+    API->>JWT: Validate access token
+    JWT-->>API: Authenticated user
+    API->>DB: Load current user
+    DB-->>API: User data
+    API-->>C: JSON profile response
+```
+
+This flow represents the current JWT-protected API behavior: the client authenticates once, receives tokens, and sends the access token in the `Authorization` header for protected endpoints.
+
 ## Authentication
 
 Authentication uses **JWT with SimpleJWT**.
@@ -74,6 +129,107 @@ PATCH  /api/accounts/me/
 ```
 
 Protected endpoints require a bearer token.
+
+
+## API Examples
+
+The examples below use placeholder data and match the currently implemented serializers and JWT endpoints.
+
+### Register a student
+
+```http
+POST /api/accounts/register/
+Content-Type: application/json
+```
+
+```json
+{
+  "phone": "09120000000",
+  "first_name": "Arman",
+  "last_name": "Example",
+  "email": "arman@example.com",
+  "password": "StrongPassword123!",
+  "password_confirm": "StrongPassword123!"
+}
+```
+
+Example response shape:
+
+```json
+{
+  "id": 1,
+  "phone": "09120000000",
+  "first_name": "Arman",
+  "last_name": "Example",
+  "email": "arman@example.com"
+}
+```
+
+New self-registered users are created with the student role, and a related student profile is created automatically.
+
+### Obtain JWT tokens
+
+```http
+POST /api/accounts/login/
+Content-Type: application/json
+```
+
+```json
+{
+  "phone": "09120000000",
+  "password": "StrongPassword123!"
+}
+```
+
+Example response shape:
+
+```json
+{
+  "refresh": "<refresh-token>",
+  "access": "<access-token>"
+}
+```
+
+### Access the current user
+
+```http
+GET /api/accounts/me/
+Authorization: Bearer <access-token>
+```
+
+Example response shape:
+
+```json
+{
+  "id": 1,
+  "phone": "09120000000",
+  "first_name": "Arman",
+  "last_name": "Example",
+  "email": "arman@example.com",
+  "role": "student",
+  "role_display": "Student",
+  "created_at": "2026-10-03T12:00:00Z"
+}
+```
+
+The exact localized value of `role_display` follows the choices configured in the user model.
+
+### Refresh an access token
+
+```http
+POST /api/accounts/token/refresh/
+Content-Type: application/json
+```
+
+```json
+{
+  "refresh": "<refresh-token>"
+}
+```
+
+## Postman / API Screenshots
+
+Real Postman screenshots should be captured from the running local API rather than fabricated. The repository is ready for them, and they can be added later under a dedicated documentation/assets folder once representative requests have been captured from the actual project.
 
 ## Student Management
 
