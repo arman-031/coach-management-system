@@ -1,0 +1,1485 @@
+[
+  {
+    "slug": "barbell-bench-press",
+    "name": "پرس سینه هالتر",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "هالتر و نیمکت",
+    "description": "روی نیمکت دراز بکش، کتف‌ها را جمع کن و میله را کنترل‌شده تا نزدیکی سینه پایین بیاور و با حفظ مسیر ثابت بالا ببر.",
+    "common_mistake": "بالا آوردن شانه‌ها و باز کردن بیش از حد آرنج‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": [{
+    "type": "VIDEO",
+    "file": "barbell-bench-press/demo.webm",
+    "thumbnail": "barbell-bench-press/thumbnail.jpg",
+    "is_primary": true,
+    "order": 1
+  }]
+  },
+  {
+    "slug": "dumbbell-bench-press",
+    "name": "پرس سینه دمبل",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل و نیمکت",
+    "description": "دمبل‌ها را کنار سینه نگه دار، با کنترل پایین برو و در بالا بدون برخورد شدید دمبل‌ها دست‌ها را باز کن.",
+    "common_mistake": "پایین بردن بیش از حد دمبل و از دست دادن کنترل کتف.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "incline-barbell-press",
+    "name": "پرس بالا سینه هالتر",
+    "primary_muscle": "بالا سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر و نیمکت شیب‌دار",
+    "description": "زاویه نیمکت را متوسط نگه دار، میله را به بخش بالایی سینه نزدیک کن و بدون قوس زیاد کمر پرس کن.",
+    "common_mistake": "شیب بیش از حد نیمکت و تبدیل حرکت به پرس سرشانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "incline-dumbbell-press",
+    "name": "پرس بالا سینه دمبل",
+    "primary_muscle": "بالا سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل و نیمکت شیب‌دار",
+    "description": "دمبل‌ها را در مسیر طبیعی بالا سینه حرکت بده و در پایین کنترل کامل داشته باش.",
+    "common_mistake": "چرخش زیاد مچ یا رها کردن دمبل در پایین.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "chest-fly-dumbbell",
+    "name": "فلای سینه دمبل",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل و نیمکت",
+    "description": "آرنج‌ها کمی خم باشند، دست‌ها را قوسی باز کن تا کشش سینه ایجاد شود و سپس به مرکز برگردان.",
+    "common_mistake": "صاف کردن کامل آرنج و پایین رفتن بیش از دامنه مناسب.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "cable-fly",
+    "name": "کراس اور سیم کش",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "با تنه ثابت، دست‌ها را از دو طرف در مسیر قوسی جلوی بدن جمع کن و سینه را منقبض کن.",
+    "common_mistake": "تاب دادن بدن و استفاده از شتاب.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "push-up",
+    "name": "شنا سوئدی",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "بدن را در یک خط نگه دار، سینه را کنترل‌شده پایین بیاور و با فشار کف دست‌ها بالا برو.",
+    "common_mistake": "افتادن لگن یا جلو آمدن بیش از حد سر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "decline-push-up",
+    "name": "شنا پا بالا",
+    "primary_muscle": "بالا سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "وزن بدن",
+    "description": "پاها را روی سطح بالاتر قرار بده و با حفظ راستای بدن شنا برو.",
+    "common_mistake": "قوس زیاد کمر و کوتاه کردن دامنه حرکت.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "chest-press-machine",
+    "name": "پرس سینه دستگاه",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "پشت بازو",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "صندلی را طوری تنظیم کن که دسته‌ها هم‌سطح سینه باشند و با کتف ثابت پرس کن.",
+    "common_mistake": "جدا شدن کمر از پشتی یا قفل کردن شدید آرنج.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "pec-deck",
+    "name": "قفسه سینه دستگاه",
+    "primary_muscle": "سینه",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "ساعدها روی پد، کتف‌ها عقب و حرکت جمع کردن دست‌ها با تمرکز بر انقباض سینه.",
+    "common_mistake": "گرد کردن شانه‌ها و ضربه زدن در انتهای دامنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "lat-pulldown",
+    "name": "لت سیم کش از جلو",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "میله را با سینه بالا به سمت بالای سینه بکش و آرنج‌ها را به پایین هدایت کن.",
+    "common_mistake": "کشیدن میله پشت گردن یا تاب دادن زیاد تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "pull-up",
+    "name": "بارفیکس",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "وزن بدن",
+    "description": "از آویزان کامل با کنترل بالا بیا و سینه را به سمت میله نزدیک کن.",
+    "common_mistake": "تاب خوردن و نیمه انجام دادن دامنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "chin-up",
+    "name": "بارفیکس دست برعکس",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "وزن بدن",
+    "description": "کف دست‌ها رو به خودت، بدن را کنترل‌شده بالا بکش و آرنج‌ها را پایین نگه دار.",
+    "common_mistake": "جمع کردن شانه‌ها به جلو و ضربه زدن با پا.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "barbell-row",
+    "name": "زیربغل هالتر خم",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو",
+      "همسترینگ"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر",
+    "description": "با ستون فقرات خنثی از لگن خم شو و میله را به سمت پایین شکم بکش.",
+    "common_mistake": "گرد کردن کمر و بالا آوردن تنه در هر تکرار.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "dumbbell-row",
+    "name": "زیربغل دمبل تک دست",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل و نیمکت",
+    "description": "تنه ثابت، دمبل را با آرنج به سمت لگن بکش و در بالا کتف را جمع کن.",
+    "common_mistake": "چرخاندن زیاد تنه و کشیدن دمبل به سمت شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "seated-cable-row",
+    "name": "قایقی سیم کش",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "سینه را بالا نگه دار و دسته را به سمت شکم بکش؛ آرنج‌ها نزدیک بدن.",
+    "common_mistake": "عقب و جلو رفتن زیاد تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "t-bar-row",
+    "name": "تی بار",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "تی‌بار یا هالتر",
+    "description": "با تنه پایدار دسته را به سمت سینه/شکم بکش و کتف‌ها را جمع کن.",
+    "common_mistake": "قوس یا گردی بیش از حد کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "straight-arm-pulldown",
+    "name": "پول داون دست صاف",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "پشت بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "آرنج کمی خم و ثابت؛ دسته را با عضلات پشت از بالای سر تا ران پایین بیاور.",
+    "common_mistake": "تبدیل حرکت به پشت بازو با خم کردن زیاد آرنج.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "face-pull",
+    "name": "فیس پول",
+    "primary_muscle": "پشت شانه",
+    "secondary_muscles": [
+      "پشت",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل و طناب",
+    "description": "طناب را به سمت صورت بکش، آرنج‌ها بالا و کتف‌ها را جمع کن.",
+    "common_mistake": "پایین نگه داشتن آرنج یا قوس دادن کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "reverse-fly",
+    "name": "فلای معکوس",
+    "primary_muscle": "پشت شانه",
+    "secondary_muscles": [
+      "پشت"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/دستگاه",
+    "description": "با آرنج کمی خم دست‌ها را به طرفین باز کن و کتف‌ها را کنترل‌شده جمع کن.",
+    "common_mistake": "استفاده از وزن زیاد و تاب دادن دست‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "back-extension",
+    "name": "فیله کمر",
+    "primary_muscle": "فیله کمر",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "نیمکت فیله",
+    "description": "از لگن خم شو و تا امتداد طبیعی بدن بالا بیا؛ کمر را بیش از حد گود نکن.",
+    "common_mistake": "بالا آمدن بیش از خط بدن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "deadlift",
+    "name": "ددلیفت",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ",
+      "چهارسر ران"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "هالتر",
+    "description": "میله نزدیک ساق، ستون فقرات خنثی و با فشار پا و باز شدن لگن وزنه را بالا بیاور.",
+    "common_mistake": "گرد شدن کمر و دور شدن میله از بدن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "overhead-press",
+    "name": "پرس سرشانه هالتر",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "پشت بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر",
+    "description": "میله را از جلوی شانه‌ها در مسیر عمودی بالای سر ببر و شکم را سفت نگه دار.",
+    "common_mistake": "قوس زیاد کمر و جلو آوردن سر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "dumbbell-shoulder-press",
+    "name": "پرس سرشانه دمبل",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "پشت بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "دمبل‌ها را از کنار شانه‌ها بالا ببر و در پایین کنترل کامل داشته باش.",
+    "common_mistake": "برخورد شدید دمبل‌ها در بالا یا قوس کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "arnold-press",
+    "name": "پرس آرنولدی",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "پشت بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "دمبل",
+    "description": "از جلوی صورت با چرخش کنترل‌شده دست‌ها را به پرس بالای سر تبدیل کن.",
+    "common_mistake": "چرخش سریع و استفاده از دامنه دردناک.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "lateral-raise",
+    "name": "نشر جانب دمبل",
+    "primary_muscle": "سرشانه میانی",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "آرنج کمی خم، دمبل‌ها را تا حدود ارتفاع شانه بالا بیاور.",
+    "common_mistake": "بالا کشیدن شانه‌ها و تاب دادن بدن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "cable-lateral-raise",
+    "name": "نشر جانب سیم کش",
+    "primary_muscle": "سرشانه میانی",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "کابل را از کنار بدن با کنترل تا ارتفاع مناسب بالا ببر.",
+    "common_mistake": "خم کردن زیاد آرنج یا چرخاندن تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "front-raise",
+    "name": "نشر جلو دمبل",
+    "primary_muscle": "سرشانه جلویی",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "دمبل را با بازوی تقریباً صاف تا ارتفاع شانه بالا بیاور.",
+    "common_mistake": "تاب دادن تنه و بالا بردن بیش از حد.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "upright-row",
+    "name": "کول هالتر",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "کول"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر",
+    "description": "میله را نزدیک بدن تا سطح مناسب بالا بکش و آرنج‌ها را کنترل کن.",
+    "common_mistake": "بالا بردن بیش از دامنه راحت شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "shrug",
+    "name": "شراگ دمبل",
+    "primary_muscle": "کول",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "شانه‌ها را مستقیم به سمت بالا ببر، مکث کوتاه و کنترل‌شده پایین بیاور.",
+    "common_mistake": "چرخاندن شانه‌ها به شکل دایره‌ای.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "rear-delt-machine",
+    "name": "پشت شانه دستگاه",
+    "primary_muscle": "پشت شانه",
+    "secondary_muscles": [
+      "پشت"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "سینه روی پد و دست‌ها را به طرفین باز کن تا پشت شانه منقبض شود.",
+    "common_mistake": "جدا کردن سینه از پد و شتاب دادن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "landmine-press",
+    "name": "پرس لندماین",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "بالا سینه",
+      "پشت بازو"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر لندماین",
+    "description": "هالتر را در مسیر مورب بالا پرس کن و تنه را پایدار نگه دار.",
+    "common_mistake": "چرخش زیاد کمر و از دست دادن کنترل لگن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "barbell-curl",
+    "name": "جلو بازو هالتر",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "هالتر",
+    "description": "آرنج‌ها کنار بدن ثابت بمانند و هالتر را بدون تاب دادن بالا بیاور.",
+    "common_mistake": "عقب بردن تنه و جلو آمدن آرنج‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "dumbbell-curl",
+    "name": "جلو بازو دمبل",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "دمبل‌ها را با کنترل بالا بیاور و در پایین آرنج را کامل ولی نرم باز کن.",
+    "common_mistake": "استفاده از شتاب بدن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hammer-curl",
+    "name": "جلو بازو چکشی",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [
+      "ساعد"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "کف دست‌ها رو به هم و دمبل‌ها را با آرنج ثابت بالا بیاور.",
+    "common_mistake": "حرکت دادن آرنج به جلو.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "incline-dumbbell-curl",
+    "name": "جلو بازو دمبل روی میز شیب‌دار",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "دمبل و نیمکت",
+    "description": "بازوها پشت خط تنه و حرکت را بدون بلند شدن آرنج انجام بده.",
+    "common_mistake": "استفاده از وزن زیاد و کوتاه کردن دامنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "preacher-curl",
+    "name": "جلو بازو لاری",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "میز لاری",
+    "description": "بازو روی پد ثابت و وزنه را در دامنه کنترل‌شده بالا بیاور.",
+    "common_mistake": "قفل کردن خشن آرنج در پایین.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "cable-curl",
+    "name": "جلو بازو سیم کش",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "آرنج ثابت و کشش پیوسته کابل را حفظ کن.",
+    "common_mistake": "عقب رفتن تنه برای کمک گرفتن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "concentration-curl",
+    "name": "جلو بازو تمرکزی",
+    "primary_muscle": "جلو بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "آرنج روی داخل ران ثابت و دمبل را با تمرکز بالا بیاور.",
+    "common_mistake": "حرکت دادن شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "triceps-pushdown",
+    "name": "پشت بازو سیم کش",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "آرنج‌ها کنار بدن، دسته را تا باز شدن کامل آرنج پایین ببر.",
+    "common_mistake": "جلو و عقب کردن آرنج.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "rope-pushdown",
+    "name": "پشت بازو طناب",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل و طناب",
+    "description": "طناب را پایین ببر و در انتها دو سر طناب را کمی از هم باز کن.",
+    "common_mistake": "استفاده از وزن زیاد و خم شدن زیاد تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "overhead-triceps-extension",
+    "name": "پشت بازو بالای سر دمبل",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل",
+    "description": "آرنج‌ها رو به جلو و دمبل را پشت سر پایین برده سپس باز کن.",
+    "common_mistake": "باز شدن آرنج‌ها به طرفین.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "skull-crusher",
+    "name": "پشت بازو خوابیده هالتر",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر EZ و نیمکت",
+    "description": "بازو ثابت و فقط آرنج را خم کن تا میله نزدیک پیشانی/پشت سر برسد.",
+    "common_mistake": "حرکت دادن شانه و پایین آوردن سریع وزنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "close-grip-bench",
+    "name": "پرس سینه دست جمع",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [
+      "سینه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر و نیمکت",
+    "description": "دست‌ها کمی جمع‌تر از حالت معمول و آرنج‌ها نزدیک بدن پرس کن.",
+    "common_mistake": "گرفتن بیش از حد جمع و فشار زیاد به مچ.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "bench-dip",
+    "name": "دیپ پشت بازو روی نیمکت",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "نیمکت",
+    "description": "لگن نزدیک نیمکت و آرنج‌ها رو به عقب خم شوند.",
+    "common_mistake": "پایین رفتن بیش از دامنه راحت شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "parallel-bar-dip",
+    "name": "دیپ پارالل",
+    "primary_muscle": "پشت بازو",
+    "secondary_muscles": [
+      "سینه",
+      "سرشانه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "پارالل",
+    "description": "بدن کنترل‌شده پایین و با فشار دست‌ها بالا بیاید.",
+    "common_mistake": "افتادن شانه‌ها و تاب دادن پاها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "wrist-curl",
+    "name": "مچ هالتر",
+    "primary_muscle": "ساعد",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "هالتر",
+    "description": "ساعدها ثابت و فقط مچ را در دامنه کنترل‌شده خم و باز کن.",
+    "common_mistake": "استفاده از شتاب یا دامنه دردناک.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "reverse-curl",
+    "name": "جلو بازو معکوس",
+    "primary_muscle": "ساعد",
+    "secondary_muscles": [
+      "جلو بازو"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "هالتر EZ",
+    "description": "کف دست رو به پایین و با آرنج ثابت وزنه را بالا بیاور.",
+    "common_mistake": "وزن زیاد و شکستن مچ.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "back-squat",
+    "name": "اسکوات هالتر پشت",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر",
+    "description": "پاها پایدار، زانوها هم‌جهت پنجه‌ها و لگن را کنترل‌شده پایین ببر.",
+    "common_mistake": "جمع شدن زانوها به داخل و گرد شدن کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "front-squat",
+    "name": "اسکوات جلو",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "میان‌تنه"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "هالتر",
+    "description": "هالتر روی جلوی شانه‌ها، آرنج بالا و تنه عمودی‌تر از اسکوات پشت.",
+    "common_mistake": "افتادن آرنج‌ها و جلو خم شدن تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "goblet-squat",
+    "name": "اسکوات گابلت",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/کتل‌بل",
+    "description": "وزنه جلوی سینه و با تنه پایدار پایین برو.",
+    "common_mistake": "بلند شدن پاشنه یا جمع شدن زانوها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "leg-press",
+    "name": "پرس پا دستگاه",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "کمر و لگن روی پد، زانوها در مسیر پنجه‌ها و صفحه را کنترل‌شده پایین بیاور.",
+    "common_mistake": "جدا شدن لگن از پشتی یا قفل کردن زانو.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hack-squat",
+    "name": "هاک اسکوات",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "دستگاه",
+    "description": "پشت روی پد و با کنترل تا عمق مناسب پایین برو.",
+    "common_mistake": "پایین رفتن فراتر از کنترل لگن یا قفل زانو.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "leg-extension",
+    "name": "جلو پا دستگاه",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "محور دستگاه با زانو هم‌راستا و ساق را کنترل‌شده باز کن.",
+    "common_mistake": "ضربه زدن در بالا و وزنه بیش از حد.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "lying-leg-curl",
+    "name": "پشت پا خوابیده",
+    "primary_muscle": "همسترینگ",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "لگن روی پد ثابت و پاشنه‌ها را به سمت باسن جمع کن.",
+    "common_mistake": "بلند شدن لگن از دستگاه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "seated-leg-curl",
+    "name": "پشت پا نشسته",
+    "primary_muscle": "همسترینگ",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "ران‌ها زیر پد ثابت و زانو را کنترل‌شده خم کن.",
+    "common_mistake": "کوتاه کردن دامنه یا حرکت ناگهانی.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "romanian-deadlift",
+    "name": "ددلیفت رومانیایی",
+    "primary_muscle": "همسترینگ",
+    "secondary_muscles": [
+      "باسن",
+      "فیله کمر"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "هالتر",
+    "description": "زانو کمی خم، لگن را عقب بده و میله را نزدیک پا پایین ببر.",
+    "common_mistake": "خم کردن زیاد زانو یا گرد کردن کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "stiff-leg-deadlift",
+    "name": "ددلیفت پا صاف",
+    "primary_muscle": "همسترینگ",
+    "secondary_muscles": [
+      "باسن",
+      "فیله کمر"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "هالتر",
+    "description": "با زانوی اندکی نرم از لگن خم شو و کشش همسترینگ را کنترل کن.",
+    "common_mistake": "قفل کردن کامل زانو یا گردی کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "walking-lunge",
+    "name": "لانج راه رفتنی",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/وزن بدن",
+    "description": "قدم کنترل‌شده بردار و هر دو زانو را خم کن، سپس از پای جلو بلند شو.",
+    "common_mistake": "کوتاه بودن قدم و افتادن زانو به داخل.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "reverse-lunge",
+    "name": "لانج معکوس",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/وزن بدن",
+    "description": "یک پا را عقب ببر و با کنترل پایین برو، سپس به وضعیت شروع برگرد.",
+    "common_mistake": "به‌هم خوردن تعادل و خم شدن زیاد تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "bulgarian-split-squat",
+    "name": "اسپلیت اسکوات بلغاری",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "همسترینگ"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "دمبل و نیمکت",
+    "description": "پای عقب روی نیمکت و وزن اصلی روی پای جلو؛ عمودی پایین برو.",
+    "common_mistake": "فاصله نامناسب پاها و افتادن زانو به داخل.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "step-up",
+    "name": "استپ آپ",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "جعبه/نیمکت",
+    "description": "یک پا روی سطح و با فشار همان پا بدن را بالا ببر.",
+    "common_mistake": "هل دادن بیش از حد با پای عقب.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hip-thrust",
+    "name": "هیپ تراست",
+    "primary_muscle": "باسن",
+    "secondary_muscles": [
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "هالتر و نیمکت",
+    "description": "بالای کتف روی نیمکت، لگن را بالا ببر و در بالا باسن را منقبض کن.",
+    "common_mistake": "قوس زیاد کمر به‌جای باز شدن لگن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "glute-bridge",
+    "name": "پل باسن",
+    "primary_muscle": "باسن",
+    "secondary_muscles": [
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن/هالتر",
+    "description": "از زمین لگن را بالا ببر و در بالا باسن را منقبض کن.",
+    "common_mistake": "فشار آوردن با کمر به‌جای باسن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "cable-kickback",
+    "name": "کیک بک باسن سیم کش",
+    "primary_muscle": "باسن",
+    "secondary_muscles": [
+      "همسترینگ"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل",
+    "description": "تنه ثابت و پا را بدون چرخش لگن به عقب ببر.",
+    "common_mistake": "قوس دادن کمر و دامنه بیش از حد.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hip-abduction-machine",
+    "name": "خارج ران دستگاه",
+    "primary_muscle": "باسن کناری",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "زانوها را با کنترل به طرفین باز کن و تنه را ثابت نگه دار.",
+    "common_mistake": "ضربه زدن با پاها یا استفاده از شتاب.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hip-adduction-machine",
+    "name": "داخل ران دستگاه",
+    "primary_muscle": "داخل ران",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "پاها را با کنترل به سمت داخل جمع کن و آهسته بازگردان.",
+    "common_mistake": "رها کردن وزنه در برگشت.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "standing-calf-raise",
+    "name": "ساق ایستاده",
+    "primary_muscle": "ساق پا",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه/دمبل",
+    "description": "پاشنه را کامل پایین و سپس روی پنجه بالا برو.",
+    "common_mistake": "تند زدن تکرارها و کوتاه کردن دامنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "seated-calf-raise",
+    "name": "ساق نشسته",
+    "primary_muscle": "ساق پا",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "دستگاه",
+    "description": "پنجه ثابت و پاشنه را در دامنه کامل بالا و پایین کن.",
+    "common_mistake": "پرش دادن وزنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "single-leg-calf-raise",
+    "name": "ساق تک پا",
+    "primary_muscle": "ساق پا",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن/دمبل",
+    "description": "روی یک پا در دامنه کامل بالا و پایین برو و تعادل را حفظ کن.",
+    "common_mistake": "چرخش مچ به داخل/خارج.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "plank",
+    "name": "پلانک",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "شکم",
+      "فیله کمر"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "بدن در یک خط، شکم و باسن سفت و آرنج زیر شانه.",
+    "common_mistake": "افتادن لگن یا بالا بردن بیش از حد باسن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "side-plank",
+    "name": "پلانک بغل",
+    "primary_muscle": "عضلات مورب شکم",
+    "secondary_muscles": [
+      "میان‌تنه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "بدن از سر تا پا در یک خط و لگن بالا نگه داشته شود.",
+    "common_mistake": "افتادن لگن یا چرخیدن شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "crunch",
+    "name": "کرانچ",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "با انقباض شکم شانه‌ها را کمی از زمین جدا کن و گردن را آزاد نگه دار.",
+    "common_mistake": "کشیدن گردن با دست‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "cable-crunch",
+    "name": "کرانچ سیم کش",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "کابل",
+    "description": "لگن ثابت و با جمع کردن دنده‌ها به سمت لگن تنه را خم کن.",
+    "common_mistake": "کشیدن فقط با دست‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hanging-knee-raise",
+    "name": "بالا آوردن زانو آویزان",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [
+      "خم‌کننده ران"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "بارفیکس",
+    "description": "بدون تاب خوردن زانوها را به سمت سینه بالا بیاور.",
+    "common_mistake": "استفاده از شتاب پاها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hanging-leg-raise",
+    "name": "بالا آوردن پا آویزان",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [
+      "خم‌کننده ران"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "بارفیکس",
+    "description": "پاها را با کنترل بالا بیاور و لگن را در انتها کمی جمع کن.",
+    "common_mistake": "تاب خوردن و خم شدن بیش از حد کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "reverse-crunch",
+    "name": "کرانچ معکوس",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "زانوها را جمع کن و لگن را کمی از زمین بلند کن.",
+    "common_mistake": "تاب دادن پاها بدون جمع شدن لگن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "russian-twist",
+    "name": "چرخش روسی",
+    "primary_muscle": "عضلات مورب شکم",
+    "secondary_muscles": [
+      "میان‌تنه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "وزن بدن/دمبل",
+    "description": "تنه را با کنترل از یک سمت به سمت دیگر بچرخان.",
+    "common_mistake": "حرکت فقط دست‌ها بدون چرخش تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "dead-bug",
+    "name": "ددباگ",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "شکم"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "کمر را روی زمین نگه دار و دست و پای مخالف را آرام باز کن.",
+    "common_mistake": "جدا شدن کمر از زمین.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "bird-dog",
+    "name": "برد داگ",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "باسن",
+      "فیله کمر"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "چهاردست‌وپا، دست و پای مخالف را بدون چرخش لگن دراز کن.",
+    "common_mistake": "چرخش لگن یا قوس دادن کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "ab-wheel-rollout",
+    "name": "رول اوت شکم",
+    "primary_muscle": "شکم",
+    "secondary_muscles": [
+      "میان‌تنه",
+      "سرشانه"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "چرخ شکم",
+    "description": "بدن را با شکم سفت جلو ببر و قبل از گود شدن کمر برگرد.",
+    "common_mistake": "افتادن کمر و از دست دادن کنترل.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "pallof-press",
+    "name": "پالوف پرس",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "عضلات مورب شکم"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کابل/کش",
+    "description": "در برابر چرخش کابل مقاومت کن و دست‌ها را جلو ببری.",
+    "common_mistake": "چرخیدن تنه به سمت کابل.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "kettlebell-swing",
+    "name": "سوئینگ کتل بل",
+    "primary_muscle": "باسن",
+    "secondary_muscles": [
+      "همسترینگ",
+      "میان‌تنه"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "کتل‌بل",
+    "description": "حرکت از باز شدن انفجاری لگن باشد نه بالا بردن وزنه با دست‌ها.",
+    "common_mistake": "تبدیل حرکت به اسکوات یا بالا کشیدن با شانه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "goblet-lunge",
+    "name": "لانج گابلت",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/کتل‌بل",
+    "description": "وزنه جلوی سینه و لانج را با تنه پایدار انجام بده.",
+    "common_mistake": "خم شدن زیاد تنه.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "farmer-carry",
+    "name": "راه رفتن کشاورزی",
+    "primary_muscle": "ساعد",
+    "secondary_muscles": [
+      "کول",
+      "میان‌تنه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/کتل‌بل",
+    "description": "وزنه‌ها کنار بدن، قامت بلند و قدم‌های کنترل‌شده بردار.",
+    "common_mistake": "کج شدن تنه یا شانه‌های افتاده.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "suitcase-carry",
+    "name": "راه رفتن چمدانی",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "ساعد"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دمبل/کتل‌بل",
+    "description": "وزنه یک طرف بدن و بدون خم شدن به همان سمت راه برو.",
+    "common_mistake": "کج شدن تنه برای جبران وزن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "thruster",
+    "name": "تراستر",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "سرشانه",
+      "باسن"
+    ],
+    "difficulty": "ADVANCED",
+    "equipment": "هالتر/دمبل",
+    "description": "از اسکوات با قدرت بالا بیا و حرکت را به پرس بالای سر وصل کن.",
+    "common_mistake": "جدا کردن کامل دو حرکت یا قوس کمر در پرس.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "burpee",
+    "name": "برپی",
+    "primary_muscle": "کل بدن",
+    "secondary_muscles": [
+      "شکم",
+      "سینه",
+      "پا"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "وزن بدن",
+    "description": "از ایستاده به پلانک برو، کنترل‌شده برگرد و پرش انجام بده.",
+    "common_mistake": "فرود بی‌کنترل و افتادن لگن در پلانک.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "mountain-climber",
+    "name": "مانتین کلایمر",
+    "primary_muscle": "میان‌تنه",
+    "secondary_muscles": [
+      "پا",
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "در حالت پلانک زانوها را یکی‌یکی به جلو بیاور و لگن ثابت بماند.",
+    "common_mistake": "بالا رفتن لگن یا ضربه زدن پاها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "box-jump",
+    "name": "پرش روی باکس",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "ساق پا"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "باکس",
+    "description": "با پرش کنترل‌شده روی باکس فرود نرم داشته باش و کامل بایست.",
+    "common_mistake": "انتخاب ارتفاع بیش از توان و فرود سخت.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "sled-push",
+    "name": "هل دادن سورتمه",
+    "primary_muscle": "چهارسر ران",
+    "secondary_muscles": [
+      "باسن",
+      "ساق پا"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "سورتمه",
+    "description": "تنه مایل و قدم‌های کوتاه و قدرتمند با ستون فقرات پایدار.",
+    "common_mistake": "خم شدن بیش از حد کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "battle-rope-wave",
+    "name": "موج طناب بتل روپ",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "میان‌تنه",
+      "ساعد"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "بتل روپ",
+    "description": "زانو کمی خم، تنه ثابت و موج‌های یکنواخت با دست‌ها ایجاد کن.",
+    "common_mistake": "حرکت زیاد تنه و از دست دادن ریتم.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "band-pull-apart",
+    "name": "باز کردن کش جلوی سینه",
+    "primary_muscle": "پشت شانه",
+    "secondary_muscles": [
+      "پشت"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کش تمرینی",
+    "description": "کش را با آرنج تقریباً صاف باز کن تا کتف‌ها جمع شوند.",
+    "common_mistake": "بالا انداختن شانه‌ها.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "wall-slide",
+    "name": "وال اسلاید",
+    "primary_muscle": "سرشانه",
+    "secondary_muscles": [
+      "پشت"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "دیوار",
+    "description": "پشت و بازوها را تا حد راحت به دیوار نزدیک نگه دار و دست‌ها را بالا ببر.",
+    "common_mistake": "قوس زیاد کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "scapular-push-up",
+    "name": "شنا کتف",
+    "primary_muscle": "کتف",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "در پلانک بدون خم کردن آرنج، کتف‌ها را باز و جمع کن.",
+    "common_mistake": "خم کردن آرنج و افتادن لگن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "scapular-pull-up",
+    "name": "بارفیکس کتف",
+    "primary_muscle": "کتف",
+    "secondary_muscles": [
+      "پشت"
+    ],
+    "difficulty": "INTERMEDIATE",
+    "equipment": "بارفیکس",
+    "description": "بدون خم کردن آرنج، شانه‌ها را پایین بکش و بدن را کمی بالا ببر.",
+    "common_mistake": "تبدیل حرکت به بارفیکس کامل.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "band-external-rotation",
+    "name": "چرخش خارجی شانه با کش",
+    "primary_muscle": "روتاتور کاف",
+    "secondary_muscles": [
+      "سرشانه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "کش تمرینی",
+    "description": "آرنج کنار بدن ثابت و ساعد را به بیرون بچرخان.",
+    "common_mistake": "جدا شدن آرنج از بدن.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hip-flexor-stretch",
+    "name": "کشش خم‌کننده ران",
+    "primary_muscle": "خم‌کننده ران",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "در حالت لانج زانو روی زمین، لگن را کمی به جلو و زیر خود جمع کن.",
+    "common_mistake": "گود کردن زیاد کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "hamstring-stretch",
+    "name": "کشش همسترینگ",
+    "primary_muscle": "همسترینگ",
+    "secondary_muscles": [],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "با کمر خنثی از لگن به سمت پای صاف متمایل شو.",
+    "common_mistake": "گرد کردن شدید کمر.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  },
+  {
+    "slug": "thoracic-rotation",
+    "name": "چرخش ستون سینه‌ای",
+    "primary_muscle": "پشت",
+    "secondary_muscles": [
+      "میان‌تنه"
+    ],
+    "difficulty": "BEGINNER",
+    "equipment": "وزن بدن",
+    "description": "در حالت چهاردست‌وپا/نیمه زانو، سینه را کنترل‌شده بچرخان.",
+    "common_mistake": "چرخش از کمر به‌جای بخش سینه‌ای.",
+    "is_system": true,
+    "suggested_media_type": "VIDEO",
+    "media": []
+  }
+]

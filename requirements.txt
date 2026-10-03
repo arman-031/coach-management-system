@@ -1,0 +1,7 @@
+Django==5.2.17
+djangorestframework==3.18.1
+djangorestframework-simplejwt==5.5.1
+django-filter==26.1
+psycopg[binary]==3.3.6
+python-dotenv==1.2.3
+Pillow==12.3.0
