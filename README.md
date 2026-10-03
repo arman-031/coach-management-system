@@ -6,7 +6,7 @@
 
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
-A **Persian-first coaching management backend** built with Django REST Framework and PostgreSQL. The system is designed for real coach/student workflows, with authentication, student management, and an exercise bank already implemented.
+A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, and the exercise library are already implemented; program workflows are the next major development stage.
 
 ## Tech Stack
 
@@ -23,7 +23,7 @@ A **Persian-first coaching management backend** built with Django REST Framework
 - Exercise bank with muscle groups
 - Exercise media model with image, video, GIF, thumbnail, and ordering support
 - Coach-facing exercise and muscle-group APIs
-- 100-entry exercise seed dataset
+- Expandable exercise library with a 100-entry seed dataset for initial development
 - Exercise import management command
 - PostgreSQL configuration through environment variables
 - Secret/config isolation with `.env` support
@@ -245,7 +245,9 @@ The current backend includes student profile support plus coach-facing student o
 - Activating students
 - Deactivating students
 
-## Exercise Bank
+## Exercise Library
+
+The exercise library is designed to be **expandable**, not limited to the initial seed dataset. Coaches can build on the library over time by adding exercises and attaching instructional media.
 
 The exercise domain currently includes:
 
@@ -255,7 +257,7 @@ The exercise domain currently includes:
 
 Exercises can include structured information such as muscle groups, difficulty, equipment, common mistakes, and related media.
 
-The repository includes a **100-entry exercise JSON dataset** plus a management command for importing/updating those records:
+The repository currently ships with a **100-entry JSON seed dataset** to provide useful starting data for development. This is seed content, not a product limit. The import management command can create or update those records:
 
 ```bash
 python manage.py import_exercises
@@ -275,16 +277,20 @@ The full uploaded media library is **not stored in Git**. Local uploaded media i
 
 Production media storage is planned for a dedicated external storage service rather than the Git repository.
 
-## Business Rules
+## Product Vision & Business Rules
 
-The following product rules are part of the planned system design and are **not yet fully implemented**:
+The system is being built to support both **online coaching** and **in-person coaching** from the same backend. A coach should be able to open a student's page, create the appropriate program, attach relevant exercise guidance, and keep previous programs accessible to the student.
 
+The following program workflows and business rules are planned and are **not yet fully implemented**:
+
+- Program categories:
+  - **Bodybuilding**
+  - **Nutrition**
+  - **Corrective**
 - Program duration: **45 days**
 - Students retain previous programs in an archive
-- Program categories:
-  - Bodybuilding
-  - Nutrition
-  - Corrective
+- Exercise items can provide **video, GIF, or image guidance** for easier movement access
+- The exercise library remains expandable as the coach adds new movements
 - Coaches receive payment-related notifications
 - Coaches can review inactive students and decide whether to send follow-up notifications
 
@@ -381,7 +387,7 @@ At the current project stage, Django's test command runs successfully but the re
 - [x] Student management API
 - [x] Exercise bank models and API
 - [x] Exercise import command
-- [x] 100-entry exercise seed dataset
+- [x] Expandable exercise library foundation with 100-entry seed dataset
 - [ ] Program models and APIs
 - [ ] 45-day program lifecycle
 - [ ] Program archive/history
@@ -404,4 +410,6 @@ At the current project stage, Django's test command runs successfully but the re
 
 ## Project Goal
 
-This project is being developed as a real-world backend system rather than a one-off tutorial project. The focus is on progressively implementing authentication, domain modeling, business rules, APIs, data imports, media handling, testing, and production-oriented backend practices.
+This project is being developed as a real-world backend system rather than a one-off tutorial project. Its product goal is to make day-to-day coaching simpler: coaches can manage students, build different kinds of programs, reuse an expandable exercise library, and give students clearer access to exercise instructions whether they train online or in person.
+
+The engineering focus is on progressively implementing authentication, domain modeling, business rules, APIs, program workflows, data imports, media handling, testing, and production-oriented backend practices.
