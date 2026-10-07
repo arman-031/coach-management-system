@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,10 @@ load_dotenv(BASE_DIR / ".env")
 # Keep local checkouts usable without committing a static signing key.
 SECRET_KEY = os.getenv("SECRET_KEY") or get_random_secret_key()
 
-DEBUG = os.getenv("DEBUG", "False").strip().lower() in {
+DEBUG = os.getenv(
+    "DJANGO_DEBUG",
+    "False",
+).strip().lower() in {
     "true",
     "1",
     "yes",
@@ -165,4 +169,8 @@ REST_FRAMEWORK = {
     ),
 
     "PAGE_SIZE": 20,
+}
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=8),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
