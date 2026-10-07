@@ -25,6 +25,7 @@ urlpatterns = [
     path("api/accounts/", include("accounts.urls")),
     path("api/students/", include("students.urls")),
     path("api/exercises/", include("exercises.urls")),
+    path("api/programs/",include("programs.urls")),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
