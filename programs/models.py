@@ -51,6 +51,18 @@ class Program(models.Model):
         blank=True,
     )
 
+    is_deleted = models.BooleanField(
+        "حذف شده",
+        default=False,
+        db_index=True,
+    )
+
+    deleted_at = models.DateTimeField(
+        "تاریخ حذف",
+        null=True,
+        blank=True,
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
@@ -113,6 +125,18 @@ class ProgramDay(models.Model):
     order = models.PositiveSmallIntegerField(
         "ترتیب جلسه",
         default=1,
+    )
+
+    is_deleted = models.BooleanField(
+        "حذف شده",
+        default=False,
+        db_index=True,
+    )
+
+    deleted_at = models.DateTimeField(
+        "تاریخ حذف",
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(
@@ -189,6 +213,18 @@ class ProgramExercise(models.Model):
     order = models.PositiveSmallIntegerField(
         "ترتیب حرکت",
         default=1,
+    )
+
+    is_deleted = models.BooleanField(
+        "حذف شده",
+        default=False,
+        db_index=True,
+    )
+
+    deleted_at = models.DateTimeField(
+        "تاریخ حذف",
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(
