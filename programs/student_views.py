@@ -4,6 +4,7 @@ from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
 )
+
 from rest_framework.permissions import (
     BasePermission,
     IsAuthenticated,
@@ -13,11 +14,16 @@ from .models import (
     Program,
     ProgramDay,
     ProgramExercise,
+    NutritionDay,
+    NutritionMeal,
+    NutritionFoodItem,
 )
+
 from .student_serializers import (
     StudentProgramListSerializer,
     StudentProgramDetailSerializer,
 )
+
 from .services import expire_due_programs
 
 
@@ -26,6 +32,7 @@ from .services import expire_due_programs
 # ---------------------------------------
 
 class IsStudent(BasePermission):
+
     message = "فقط شاگردان به این بخش دسترسی دارند."
 
     def has_permission(self, request, view):
@@ -41,6 +48,7 @@ class IsStudent(BasePermission):
 # ---------------------------------------
 
 class StudentProgramListView(ListAPIView):
+
     serializer_class = StudentProgramListSerializer
 
     permission_classes = [
@@ -49,6 +57,7 @@ class StudentProgramListView(ListAPIView):
     ]
 
     def get_queryset(self):
+
         expire_due_programs()
 
         return Program.objects.filter(
@@ -69,6 +78,7 @@ class StudentProgramListView(ListAPIView):
 # ---------------------------------------
 
 class StudentProgramDetailView(RetrieveAPIView):
+
     serializer_class = StudentProgramDetailSerializer
 
     permission_classes = [
@@ -77,7 +87,12 @@ class StudentProgramDetailView(RetrieveAPIView):
     ]
 
     def get_queryset(self):
+
         expire_due_programs()
+
+        # -----------------------------------
+        # Active workout exercises
+        # -----------------------------------
 
         active_exercises = (
             ProgramExercise.objects.filter(
@@ -89,7 +104,11 @@ class StudentProgramDetailView(RetrieveAPIView):
             )
         )
 
-        active_days = (
+        # -----------------------------------
+        # Active workout days
+        # -----------------------------------
+
+        active_workout_days = (
             ProgramDay.objects.filter(
                 is_deleted=False,
             ).order_by(
@@ -103,6 +122,59 @@ class StudentProgramDetailView(RetrieveAPIView):
             )
         )
 
+        # -----------------------------------
+        # Active nutrition food items
+        # -----------------------------------
+
+        active_food_items = (
+            NutritionFoodItem.objects.filter(
+                is_deleted=False,
+            ).order_by(
+                "order",
+                "id",
+            )
+        )
+
+        # -----------------------------------
+        # Active nutrition meals
+        # -----------------------------------
+
+        active_meals = (
+            NutritionMeal.objects.filter(
+                is_deleted=False,
+            ).order_by(
+                "order",
+                "id",
+            ).prefetch_related(
+                Prefetch(
+                    "food_items",
+                    queryset=active_food_items,
+                )
+            )
+        )
+
+        # -----------------------------------
+        # Active nutrition days
+        # -----------------------------------
+
+        active_nutrition_days = (
+            NutritionDay.objects.filter(
+                is_deleted=False,
+            ).order_by(
+                "order",
+                "id",
+            ).prefetch_related(
+                Prefetch(
+                    "meals",
+                    queryset=active_meals,
+                )
+            )
+        )
+
+        # -----------------------------------
+        # Return student's own program
+        # -----------------------------------
+
         return Program.objects.filter(
             student__user=self.request.user,
             is_deleted=False,
@@ -111,8 +183,15 @@ class StudentProgramDetailView(RetrieveAPIView):
                 Program.Status.EXPIRED,
             ],
         ).prefetch_related(
+
             Prefetch(
                 "days",
-                queryset=active_days,
-            )
+                queryset=active_workout_days,
+            ),
+
+            Prefetch(
+                "nutrition_days",
+                queryset=active_nutrition_days,
+            ),
+
         )

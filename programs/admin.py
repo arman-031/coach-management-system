@@ -4,6 +4,9 @@ from .models import (
     Program,
     ProgramDay,
     ProgramExercise,
+    NutritionDay,
+    NutritionMeal,
+    NutritionFoodItem
 )
 
 
@@ -150,3 +153,117 @@ class ProgramExerciseAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
+
+
+
+@admin.register(NutritionDay)
+class NutritionDayAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "program",
+        "title",
+        "order",
+        "is_deleted",
+    )
+
+    list_filter = (
+        "is_deleted",
+    )
+
+    search_fields = (
+        "title",
+        "program__student__user__phone",
+    )
+
+    ordering = (
+        "program",
+        "order",
+        "id",
+    )
+
+
+
+# ---------------------------------------
+# Nutrition Meal Admin
+# ---------------------------------------
+
+@admin.register(NutritionMeal)
+class NutritionMealAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "nutrition_day",
+        "title",
+        "meal_time",
+        "order",
+        "is_deleted",
+    )
+
+    list_filter = (
+        "is_deleted",
+    )
+
+    search_fields = (
+        "title",
+        "nutrition_day__title",
+        "nutrition_day__program__student__user__phone",
+    )
+
+    ordering = (
+        "nutrition_day",
+        "order",
+        "id",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+
+# ---------------------------------------
+# Nutrition Food Item Admin
+# ---------------------------------------
+
+@admin.register(NutritionFoodItem)
+class NutritionFoodItemAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "name",
+        "nutrition_meal",
+        "quantity",
+        "unit",
+        "order",
+        "is_deleted",
+    )
+
+    list_filter = (
+        "unit",
+        "is_deleted",
+    )
+
+    search_fields = (
+        "name",
+        "nutrition_meal__title",
+        "nutrition_meal__nutrition_day__title",
+    )
+
+    ordering = (
+        "nutrition_meal",
+        "order",
+        "id",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    def has_delete_permission(self, request, obj=None):
+        return False

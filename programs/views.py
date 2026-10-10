@@ -19,7 +19,12 @@ from rest_framework.views import APIView
 
 from accounts.permissions import IsCoach
 
-from .models import Program, ProgramDay, ProgramExercise
+from .models import (
+    Program,
+    ProgramDay,
+    ProgramExercise,
+    NutritionFoodItem,
+)
 from .serializers import (
     ProgramCreateSerializer,
     ProgramDetailSerializer,
@@ -281,7 +286,125 @@ class ProgramStartPreparingView(APIView):
 # PATCH
 # ---------------------------------------
 
+# ---------------------------------------
+# Publish Program
+# PREPARING -> ACTIVE
+# PATCH
+# ---------------------------------------
+
 class ProgramPublishView(APIView):
+
+    permission_classes = [
+        IsAuthenticated,
+        IsCoach,
+    ]
+
+    def patch(self, request, pk):
+
+        # Find the coach's program.
+        program = get_object_or_404(
+            Program,
+            pk=pk,
+            created_by=request.user,
+            is_deleted=False,
+        )
+
+        # Only preparing programs can be published.
+        if program.status != Program.Status.PREPARING:
+            return Response(
+                {
+                    "detail": (
+                        "فقط برنامه در حال آماده‌سازی "
+                        "را می‌توان منتشر کرد."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # -----------------------------------
+        # Validate bodybuilding / corrective
+        # -----------------------------------
+
+        if program.program_type in (
+            Program.ProgramType.BODYBUILDING,
+            Program.ProgramType.CORRECTIVE,
+        ):
+
+            has_exercise = ProgramDay.objects.filter(
+                program=program,
+                is_deleted=False,
+                exercises__is_deleted=False,
+            ).exists()
+
+            if not has_exercise:
+                return Response(
+                    {
+                        "detail": (
+                            "برای انتشار برنامه تمرینی "
+                            "باید حداقل یک جلسه فعال "
+                            "با یک حرکت فعال وجود داشته باشد."
+                        )
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        # -----------------------------------
+        # Validate nutrition program
+        # -----------------------------------
+
+        if program.program_type == Program.ProgramType.NUTRITION:
+
+            has_food_item = NutritionFoodItem.objects.filter(
+                nutrition_meal__nutrition_day__program=program,
+                nutrition_meal__nutrition_day__is_deleted=False,
+                nutrition_meal__is_deleted=False,
+                is_deleted=False,
+            ).exists()
+
+            if not has_food_item:
+                return Response(
+                    {
+                        "detail": (
+                            "برای انتشار برنامه تغذیه "
+                            "باید حداقل یک روز فعال، "
+                            "یک وعده فعال و یک ماده غذایی "
+                            "فعال وجود داشته باشد."
+                        )
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        # -----------------------------------
+        # Publish the program
+        # -----------------------------------
+
+        published_at = timezone.now()
+
+        program.status = Program.Status.ACTIVE
+        program.published_at = published_at
+
+        program.expires_at = published_at + timedelta(
+            days=program.duration_days,
+        )
+
+        program.save(
+            update_fields=[
+                "status",
+                "published_at",
+                "expires_at",
+                "updated_at",
+            ]
+        )
+
+        serializer = ProgramDetailSerializer(
+            program,
+            context={"request": request},
+        )
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
     permission_classes = [
         IsAuthenticated,
         IsCoach,
