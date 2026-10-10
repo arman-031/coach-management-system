@@ -6,7 +6,7 @@
 
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
-A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, and the exercise library are already implemented; program workflows are the next major development stage.
+A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, and the core workout-program workflow are implemented in the current code. The project remains unfinished: detailed nutrition planning, payments, notifications, dashboards, automated tests, and production deployment are still planned.
 
 ## Tech Stack
 
@@ -27,19 +27,26 @@ A **Persian-first coaching management platform** built with Django REST Framewor
 - Exercise import management command
 - PostgreSQL configuration through environment variables
 - Secret/config isolation with `.env` support
+- Program models and coach APIs for creating, listing, and viewing programs
+- Program preparation and publication: `WAITING → PREPARING → ACTIVE`
+- Default 45-day duration, publication/expiration timestamps, and expiration checks on program reads
+- Workout sessions and exercise prescriptions (sets, reps, rest, weight/intensity, notes, and ordering)
+- Soft deletion and restore APIs for programs, sessions, and exercise items
+- Student APIs for viewing their own published and expired programs, including sessions, exercises, and instructional media
+- Jalali publication and expiration timestamps in program responses
 
-### Planned
-- Program management
-- 45-day program lifecycle rules
-- Program archive/history
-- Bodybuilding, nutrition, and corrective program workflows
-- Payment management
-- Coach payment notifications
-- Inactivity follow-up flow
-- Coach dashboard
-- Student dashboard
-- Automated test coverage
+### Remaining work
+- Detailed nutrition-plan content (the `NUTRITION` program type exists, but meal planning is not implemented)
+- Further validation and completion of bodybuilding/corrective workflows
+- Scheduled expiration processing; current expiration checks run when selected program endpoints are read
+- Payment management and coach payment notifications
+- Inactivity follow-up and notification workflows
+- Coach and student dashboards
+- Automated regression tests and CI
 - Production deployment and external media storage
+
+Implemented here means present in the source code, not that the product is complete or production-ready.
+Development requests are checked manually in Postman; automated test coverage is not yet implemented.
 
 ## Architecture
 
@@ -54,6 +61,7 @@ morabi/
 │   ├── management/commands/  # Exercise import command
 │   ├── media_seed/           # Small seed/demo media used by the importer
 │   └── ...                   # Models, serializers, views, URLs, migrations
+├── programs/                 # Programs, workout sessions, exercise items and student access
 ├── config/                   # Settings and root URL configuration
 ├── manage.py
 ├── requirements.txt
@@ -61,37 +69,28 @@ morabi/
 └── README.md
 ```
 
-Planned modules such as programs, payments, and notifications are intentionally **not** shown as implemented until they actually exist.
+The `programs` app is part of the current backend. Payment and notification modules remain planned.
 
 
 ## Architecture Diagram
 
 ```mermaid
-flowchart LR
-    Client[Client / Postman / Future Frontend]
-    API[Django REST Framework API]
-    Auth[accounts app]
-    Students[students app]
-    Exercises[exercises app]
-    JWT[SimpleJWT]
-    DB[(PostgreSQL)]
-    Media[Local Media / Future External Storage]
-
-    Client -->|HTTP / JSON| API
-    API --> Auth
-    API --> Students
-    API --> Exercises
-
-    Auth --> JWT
-    Auth --> DB
+flowchart TD
+    Client["Client / Postman / Future Frontend"] --> API["Django REST Framework API"]
+    API --> Auth["Accounts / JWT"]
+    API --> Students["Students"]
+    API --> Exercises["Exercise library"]
+    API --> Programs["Programs / Sessions / Prescriptions"]
+    Auth --> DB[(PostgreSQL)]
     Students --> DB
     Exercises --> DB
-    Exercises --> Media
-
-    JWT -->|Access / Refresh Tokens| Client
+    Programs --> DB
+    Exercises --> Media["Local media / Future external storage"]
 ```
 
-The current backend is intentionally modular: authentication and identity live in `accounts`, student-specific behavior lives in `students`, and the exercise library lives in `exercises`. PostgreSQL is the persistent data store, while uploaded media is kept outside Git and can later move to production object storage.
+Authentication and identity live in `accounts`, student profiles in `students`,
+exercise content in `exercises`, and program workflows in `programs`.
+PostgreSQL stores application data; uploaded media is kept outside Git.
 
 ## API Request Flow
 
@@ -210,8 +209,8 @@ Example response shape:
   "first_name": "Arman",
   "last_name": "Example",
   "email": "arman@example.com",
-  "role": "student",
-  "role_display": "Student",
+  "role": "STUDENT",
+  "role_display": "شاگرد",
   "created_at": "2026-10-03T12:00:00Z"
 }
 ```
@@ -231,9 +230,16 @@ Content-Type: application/json
 }
 ```
 
-## Postman / API Screenshots
+## Manual Testing with Postman
 
-Real Postman screenshots should be captured from the running local API rather than fabricated. The repository is ready for them, and they can be added later under a dedicated documentation/assets folder once representative requests have been captured from the actual project.
+During development, the APIs are tested manually in Postman. This is the current testing
+workflow; the project is still under construction and the `tests.py` files do not yet
+contain automated regression tests. Manual API checks and automated tests are separate
+activities, and passing manual requests does not establish full test coverage.
+
+An exported Postman collection, real response screenshots, and a recorded verification
+checklist can be added to the repository later. This README does not claim that every
+endpoint or edge case has been verified.
 
 ## Student Management
 
@@ -277,22 +283,50 @@ The full uploaded media library is **not stored in Git**. Local uploaded media i
 
 Production media storage is planned for a dedicated external storage service rather than the Git repository.
 
-## Product Vision & Business Rules
+## Program Workflows and Product Vision
 
-The system is being built to support both **online coaching** and **in-person coaching** from the same backend. A coach should be able to open a student's page, create the appropriate program, attach relevant exercise guidance, and keep previous programs accessible to the student.
+The backend is intended for both online and in-person coaching. The current `programs`
+app supports these core operations:
 
-The following program workflows and business rules are planned and are **not yet fully implemented**:
+- Create a program for a student with a type of `BODYBUILDING`, `CORRECTIVE`, or `NUTRITION`.
+- Move a program from `WAITING` to `PREPARING`, then publish it as `ACTIVE`.
+- For bodybuilding/corrective programs, create sessions and add exercise prescriptions.
+- Before publishing a bodybuilding/corrective program, require at least one non-deleted session with a non-deleted exercise item.
+- Set the expiration date at publication using the duration (45 days by default).
+- Mark due active programs `EXPIRED` when the expiration service is called by selected read endpoints; no background scheduler is configured yet.
+- Soft-delete and restore programs, sessions, and exercise items.
+- Let students read their own `ACTIVE` and `EXPIRED` programs; drafts and deleted content are excluded.
+- Include exercise descriptions and media in session/exercise responses.
 
-- Program categories:
-  - **Bodybuilding**
-  - **Nutrition**
-  - **Corrective**
-- Program duration: **45 days**
-- Students retain previous programs in an archive
-- Exercise items can provide **video, GIF, or image guidance** for easier movement access
-- The exercise library remains expandable as the coach adds new movements
-- Coaches receive payment-related notifications
-- Coaches can review inactive students and decide whether to send follow-up notifications
+The nutrition type currently identifies a program; it does not yet provide meals,
+food items, or a complete nutrition-plan editor. Expired programs provide a basis for
+student program history, rather than a separate completed archive product.
+
+### Current program routes
+
+All paths below are relative to `/api/programs/`. Coach routes require authentication
+and the coach role; existing-program operations filter by the program creator.
+Student routes require the student role and filter by the authenticated student's profile.
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/` | Coach program list |
+| POST | `/create/` | Create a program |
+| GET, DELETE | `/<id>/` | Read or soft-delete a program |
+| PATCH | `/<id>/start-preparing/` | Begin preparation |
+| PATCH | `/<id>/publish/` | Publish and set expiry |
+| PATCH | `/<id>/restore/` | Restore a program |
+| GET, POST | `/<id>/days/` | List or create sessions |
+| GET, PATCH, DELETE | `/<id>/days/<day_id>/` | Read, update, or soft-delete a session |
+| PATCH | `/<id>/days/<day_id>/restore/` | Restore a session |
+| POST | `/<id>/days/<day_id>/exercises/` | Add an exercise prescription |
+| GET, PATCH, DELETE | `/<id>/days/<day_id>/exercises/<item_id>/` | Read, update, or soft-delete an exercise item |
+| PATCH | `/<id>/days/<day_id>/exercises/<item_id>/restore/` | Restore an exercise item |
+| GET | `/my/` | Student's published/expired programs |
+| GET | `/my/<id>/` | Student's program with sessions and exercises |
+
+Payments, follow-up notifications, dashboards, full nutrition planning, and production
+media delivery remain future work.
 
 ## Local Setup
 
@@ -375,7 +409,7 @@ python manage.py showmigrations
 python manage.py test
 ```
 
-At the current project stage, Django's test command runs successfully but the repository does not yet contain meaningful automated test coverage.
+The `tests.py` files currently contain placeholders, so `python manage.py test` does not establish regression coverage. Development testing is performed manually in Postman. Automated tests and CI remain planned; this documentation update does not report a new runtime verification.
 
 ## Roadmap
 
@@ -388,9 +422,14 @@ At the current project stage, Django's test command runs successfully but the re
 - [x] Exercise bank models and API
 - [x] Exercise import command
 - [x] Expandable exercise library foundation with 100-entry seed dataset
-- [ ] Program models and APIs
-- [ ] 45-day program lifecycle
-- [ ] Program archive/history
+- [x] Core program models and APIs
+- [x] Default 45-day publication/expiration logic (read-triggered checks)
+- [x] Student access to published/expired programs (history foundation)
+- [x] Workout sessions and exercise prescriptions
+- [x] Program/session/exercise soft deletion and restoration
+- [x] Student program detail with exercise media
+- [ ] Complete nutrition-plan content
+- [ ] Scheduled expiration processing
 - [ ] Payment management
 - [ ] Notification workflows
 - [ ] Coach dashboard
