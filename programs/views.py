@@ -1,9 +1,9 @@
 from datetime import timedelta
-
+from django.db import transaction
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-
+from questionnaires.models import ProgramQuestionnaire
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
@@ -259,6 +259,24 @@ class ProgramStartPreparingView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        incomplete_questionnaire = (
+            ProgramQuestionnaire.objects.filter(
+                program=program,
+            ).exclude(
+                status=ProgramQuestionnaire.Status.SUBMITTED,
+            ).exists()
+        )
+
+        if incomplete_questionnaire:
+            return Response(
+                {
+                    "detail": (
+                        "پرسش‌نامه این برنامه هنوز "
+                        "ارسال نهایی نشده است."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         program.status = Program.Status.PREPARING
 
@@ -299,17 +317,18 @@ class ProgramPublishView(APIView):
         IsCoach,
     ]
 
+    @transaction.atomic
     def patch(self, request, pk):
 
-        # Find the coach's program.
+        # Find and lock the coach's program.
         program = get_object_or_404(
-            Program,
+            Program.objects.select_for_update(),
             pk=pk,
             created_by=request.user,
             is_deleted=False,
         )
 
-        # Only preparing programs can be published.
+        # Only PREPARING programs can be published.
         if program.status != Program.Status.PREPARING:
             return Response(
                 {
@@ -321,15 +340,33 @@ class ProgramPublishView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # -----------------------------------
-        # Validate bodybuilding / corrective
-        # -----------------------------------
+        # Prevent publication if an assigned
+        # questionnaire has not been submitted.
+        incomplete_questionnaire = (
+            ProgramQuestionnaire.objects.filter(
+                program=program,
+            ).exclude(
+                status=ProgramQuestionnaire.Status.SUBMITTED,
+            ).exists()
+        )
 
+        if incomplete_questionnaire:
+            return Response(
+                {
+                    "detail": (
+                        "پرسش‌نامه این برنامه هنوز "
+                        "ارسال نهایی نشده است."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Bodybuilding and corrective programs
+        # must contain at least one active exercise.
         if program.program_type in (
             Program.ProgramType.BODYBUILDING,
             Program.ProgramType.CORRECTIVE,
         ):
-
             has_exercise = ProgramDay.objects.filter(
                 program=program,
                 is_deleted=False,
@@ -348,12 +385,9 @@ class ProgramPublishView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-        # -----------------------------------
-        # Validate nutrition program
-        # -----------------------------------
-
+        # Nutrition programs must contain
+        # at least one active food item.
         if program.program_type == Program.ProgramType.NUTRITION:
-
             has_food_item = NutritionFoodItem.objects.filter(
                 nutrition_meal__nutrition_day__program=program,
                 nutrition_meal__nutrition_day__is_deleted=False,
@@ -374,15 +408,11 @@ class ProgramPublishView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-        # -----------------------------------
-        # Publish the program
-        # -----------------------------------
-
+        # The 45-day period starts only at publication.
         published_at = timezone.now()
 
         program.status = Program.Status.ACTIVE
         program.published_at = published_at
-
         program.expires_at = published_at + timedelta(
             days=program.duration_days,
         )
@@ -405,81 +435,6 @@ class ProgramPublishView(APIView):
             serializer.data,
             status=status.HTTP_200_OK,
         )
-    permission_classes = [
-        IsAuthenticated,
-        IsCoach,
-    ]
-
-    def patch(self, request, pk):
-        program = get_object_or_404(
-            Program,
-            pk=pk,
-            created_by=request.user,
-            is_deleted=False,
-        )
-
-        if program.status != Program.Status.PREPARING:
-            return Response(
-                {
-                    "detail": (
-                        "فقط برنامه در حال آماده‌سازی "
-                        "را می‌توان منتشر کرد."
-                    )
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        # Validate workout content before publication.
-        if program.program_type in (
-            Program.ProgramType.BODYBUILDING,
-            Program.ProgramType.CORRECTIVE,
-        ):
-            has_exercise = ProgramDay.objects.filter(
-                program=program,
-                is_deleted=False,
-                exercises__is_deleted=False,
-            ).exists()
-
-            if not has_exercise:
-                return Response(
-                    {
-                        "detail": (
-                            "برای انتشار برنامه باید "
-                            "حداقل یک جلسه فعال با "
-                            "یک حرکت فعال وجود داشته باشد."
-                        )
-                    },
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-        published_at = timezone.now()
-
-        program.status = Program.Status.ACTIVE
-        program.published_at = published_at
-
-        program.expires_at = published_at + timedelta(
-            days=program.duration_days,
-        )
-
-        program.save(
-            update_fields=[
-                "status",
-                "published_at",
-                "expires_at",
-                "updated_at",
-            ]
-        )
-
-        serializer = ProgramDetailSerializer(
-            program,
-            context={"request": request},
-        )
-
-        return Response(
-            serializer.data,
-            status=status.HTTP_200_OK,
-        )
-
 
 # ---------------------------------------
 # ProgramDay List + Create
