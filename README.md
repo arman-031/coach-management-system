@@ -6,7 +6,7 @@
 
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
-A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, and the core workout-program workflow are implemented in the current code. The project remains unfinished: detailed nutrition planning, payments, notifications, dashboards, automated tests, and production deployment are still planned.
+A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, questionnaires, core program workflows, and gateway-independent test payment services are implemented. The project is still under active development; live bank integration, detailed nutrition planning, notifications, dashboards, and production deployment remain future work.
 
 ## Tech Stack
 
@@ -34,19 +34,25 @@ A **Persian-first coaching management platform** built with Django REST Framewor
 - Soft deletion and restore APIs for programs, sessions, and exercise items
 - Student APIs for viewing their own published and expired programs, including sessions, exercises, and instructional media
 - Jalali publication and expiration timestamps in program responses
+- Questionnaire templates, student submissions, coach review/revision, and additional-questionnaire workflows
+- Student purchase-order creation and order-history APIs
+- Purchase and renewal fulfillment, including first-purchase questionnaire setup and renewal preparation
+- Gateway-independent payment contracts, payment-attempt tracking, and a fake test gateway
+- Eight automated order/payment regression tests
 
 ### Remaining work
 - Detailed nutrition-plan content (the `NUTRITION` program type exists, but meal planning is not implemented)
 - Further validation and completion of bodybuilding/corrective workflows
 - Scheduled expiration processing; current expiration checks run when selected program endpoints are read
-- Payment management and coach payment notifications
+- Live bank gateway integration and public payment initiation/callback endpoints
+- Payment notifications and reconciliation
 - Inactivity follow-up and notification workflows
 - Coach and student dashboards
-- Automated regression tests and CI
+- Broader automated regression coverage and CI
 - Production deployment and external media storage
 
 Implemented here means present in the source code, not that the product is complete or production-ready.
-Development requests are checked manually in Postman; automated test coverage is not yet implemented.
+The eight tests in `orders/tests.py` cover purchase fulfillment, renewals, idempotency, and the fake-gateway payment flow. Most other app test modules remain placeholders; this is not comprehensive regression coverage.
 
 ## Architecture
 
@@ -62,6 +68,9 @@ morabi/
 │   ├── media_seed/           # Small seed/demo media used by the importer
 │   └── ...                   # Models, serializers, views, URLs, migrations
 ├── programs/                 # Programs, workout sessions, exercise items and student access
+├── questionnaires/           # Questionnaire templates, submissions, review and revision
+├── orders/                   # Purchase orders, payment attempts and gateway-independent services
+│   └── gateways/              # Gateway interface and fake test implementation
 ├── config/                   # Settings and root URL configuration
 ├── manage.py
 ├── requirements.txt
@@ -69,7 +78,7 @@ morabi/
 └── README.md
 ```
 
-The `programs` app is part of the current backend. Payment and notification modules remain planned.
+The `programs`, `questionnaires`, and `orders` apps are part of the current backend. A real bank payment provider and notification workflows are not connected.
 
 
 ## Architecture Diagram
@@ -81,10 +90,14 @@ flowchart TD
     API --> Students["Students"]
     API --> Exercises["Exercise library"]
     API --> Programs["Programs / Sessions / Prescriptions"]
+    API --> Questionnaires["Questionnaires"]
+    API --> Orders["Orders / Test payments"]
     Auth --> DB[(PostgreSQL)]
     Students --> DB
     Exercises --> DB
     Programs --> DB
+    Questionnaires --> DB
+    Orders --> DB
     Exercises --> Media["Local media / Future external storage"]
 ```
 
@@ -232,10 +245,9 @@ Content-Type: application/json
 
 ## Manual Testing with Postman
 
-During development, the APIs are tested manually in Postman. This is the current testing
-workflow; the project is still under construction and the `tests.py` files do not yet
-contain automated regression tests. Manual API checks and automated tests are separate
-activities, and passing manual requests does not establish full test coverage.
+The project is still under construction. Eight automated order/payment regression tests
+are present; most other app `tests.py` files are placeholders. Manual API checks in
+Postman remain useful but do not establish full test coverage.
 
 An exported Postman collection, real response screenshots, and a recorded verification
 checklist can be added to the repository later. This README does not claim that every
@@ -325,8 +337,20 @@ Student routes require the student role and filter by the authenticated student'
 | GET | `/my/` | Student's published/expired programs |
 | GET | `/my/<id>/` | Student's program with sessions and exercises |
 
-Payments, follow-up notifications, dashboards, full nutrition planning, and production
-media delivery remain future work.
+### Orders and payments
+
+Students can create purchase orders and list their order history under `/api/orders/`.
+The `orders` app tracks `PurchaseOrder` and `PaymentAttempt` records and separates payment
+start/verification from the provider through a gateway interface. A fake gateway supports
+automated tests, and verified purchases trigger the initial questionnaire or renewal
+preparation workflow.
+
+This is a gateway-independent **test foundation**, not a live payment integration: no
+bank gateway is connected, and public payment initiation/callback endpoints are not yet
+implemented. Do not use the fake gateway for real payments.
+
+Follow-up notifications, dashboards, full nutrition planning, and production media
+delivery remain future work.
 
 ## Local Setup
 
@@ -373,7 +397,7 @@ Required variables include:
 | Variable | Purpose |
 | --- | --- |
 | `SECRET_KEY` | Django signing key |
-| `DEBUG` | Development debug mode |
+| `DJANGO_DEBUG` | Development debug mode |
 | `ALLOWED_HOSTS` | Allowed Django hosts |
 | `DB_NAME` | PostgreSQL database name |
 | `DB_USER` | PostgreSQL username |
@@ -409,7 +433,10 @@ python manage.py showmigrations
 python manage.py test
 ```
 
-The `tests.py` files currently contain placeholders, so `python manage.py test` does not establish regression coverage. Development testing is performed manually in Postman. Automated tests and CI remain planned; this documentation update does not report a new runtime verification.
+Run the payment and order regression suite with `python manage.py test orders -v 2`.
+The broader `python manage.py test` command also runs the other apps, whose test modules
+are mostly placeholders. Automated tests and CI do not yet provide comprehensive
+regression coverage.
 
 ## Roadmap
 
@@ -428,13 +455,16 @@ The `tests.py` files currently contain placeholders, so `python manage.py test` 
 - [x] Workout sessions and exercise prescriptions
 - [x] Program/session/exercise soft deletion and restoration
 - [x] Student program detail with exercise media
+- [x] Questionnaire submission and coach review/revision workflows
+- [x] Order creation/history and gateway-independent payment services
+- [x] Fake-gateway payment flow and order regression tests
 - [ ] Complete nutrition-plan content
 - [ ] Scheduled expiration processing
-- [ ] Payment management
+- [ ] Real bank gateway and public payment initiation/callback endpoints
 - [ ] Notification workflows
 - [ ] Coach dashboard
 - [ ] Student dashboard
-- [ ] Automated tests
+- [ ] Broader automated regression suite and CI
 - [ ] Production deployment
 - [ ] Production media storage
 
@@ -445,7 +475,7 @@ The `tests.py` files currently contain placeholders, so `python manage.py test` 
 - Database credentials are environment-based
 - Local databases, virtual environments, uploaded media, editor files, and dumps are excluded from Git
 - No stable development signing key is committed
-- `DEBUG` defaults to `False` unless explicitly enabled
+- `DJANGO_DEBUG` defaults to `False` unless explicitly enabled
 
 ## Project Goal
 

@@ -5,6 +5,7 @@ import math
 from .models import (
     ProgramQuestionnaire,
     ProgramQuestionnaireItem,
+    TemplateQuestion,
 )
 
 
@@ -166,3 +167,34 @@ class CoachRevisionRequestSerializer(
             "max_length": "دلیل اصلاح نباید بیشتر از ۱۰۰۰ کاراکتر باشد.",
         },
     )
+class CoachAdditionalQuestionnaireSerializer(
+    serializers.Serializer
+):
+    question_ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=False,
+    )
+
+    def validate_question_ids(self, value):
+        if len(value) != len(set(value)):
+            raise serializers.ValidationError(
+                "شناسه سؤال‌ها نباید تکراری باشد."
+            )
+
+        return value
+class CoachTemplateQuestionSerializer(
+    serializers.ModelSerializer
+):
+    class Meta:
+        model = TemplateQuestion
+
+        fields = (
+            "id",
+            "text",
+            "answer_type",
+            "options",
+            "is_required",
+            "order",
+        )
+
+        read_only_fields = fields

@@ -6,6 +6,8 @@ from .views import (
     StudentQuestionnaireSubmitView,
     CoachQuestionnaireDetailView,
     CoachQuestionnaireRevisionView,
+    CoachAdditionalQuestionnaireView,
+    CoachTemplateQuestionListView,
 )
 
 
@@ -36,5 +38,15 @@ urlpatterns = [
         "<int:program_pk>/questionnaire/request-revision/",
         CoachQuestionnaireRevisionView.as_view(),
         name="coach-questionnaire-request-revision",
+    ),
+    path(
+        "<int:program_pk>/questionnaire/request-additional/",
+        CoachAdditionalQuestionnaireView.as_view(),
+        name="coach-questionnaire-request-additional",
+    ),
+    path(
+        "<int:program_pk>/questionnaire/available-questions/",
+        CoachTemplateQuestionListView.as_view(),
+        name="coach-questionnaire-available-questions",
     ),
 ]

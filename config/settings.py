@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "exercises",
     "programs",
     "questionnaires",
+    "orders",
 ]
 
 MIDDLEWARE = [

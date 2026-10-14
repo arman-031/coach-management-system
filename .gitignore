@@ -25,8 +25,11 @@ htmlcov/
 *.sqlite3-journal
 *.db
 *.sql
+*.sql.gz
 *.dump
 *.backup
+*.bak
+*.bak.*
 staticfiles/
 /media/
 /exercises/media/
@@ -34,6 +37,7 @@ staticfiles/
 
 # Logs and temporary files
 *.log
+*.log.*
 logs/
 *.tmp
 *.temp

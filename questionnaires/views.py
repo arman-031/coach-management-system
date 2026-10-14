@@ -1,7 +1,15 @@
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-
+from django.core.exceptions import (
+    ValidationError as DjangoValidationError,
+)
+from .models import TemplateQuestion
+from .serializers import (
+    CoachAdditionalQuestionnaireSerializer,
+    CoachTemplateQuestionSerializer,
+)
+from .services import request_additional_questionnaire
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -423,6 +431,102 @@ class CoachQuestionnaireRevisionView(APIView):
                 "program_status": program.status,
                 "questionnaire_status": questionnaire.status,
                 "revision_reason": questionnaire.revision_reason,
+            },
+            status=status.HTTP_200_OK,
+        )
+class CoachAdditionalQuestionnaireView(APIView):
+
+    permission_classes = [
+        IsAuthenticated,
+        IsCoach,
+    ]
+
+    def post(self, request, program_pk):
+
+        program = get_object_or_404(
+            Program,
+            pk=program_pk,
+            created_by=request.user,
+            is_deleted=False,
+        )
+
+        serializer = CoachAdditionalQuestionnaireSerializer(
+            data=request.data,
+        )
+
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            questionnaire = request_additional_questionnaire(
+                program_id=program.id,
+                coach=request.user,
+                question_ids=serializer.validated_data[
+                    "question_ids"
+                ],
+            )
+
+        except DjangoValidationError as exc:
+            raise ValidationError({
+                "detail": exc.messages[0]
+            })
+
+        output = StudentQuestionnaireSerializer(
+            questionnaire,
+        )
+
+        return Response(
+            {
+                "detail": "پرسش‌نامه تکمیلی ایجاد شد.",
+                "program_id": program.id,
+                "questionnaire": output.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+class CoachTemplateQuestionListView(APIView):
+
+    permission_classes = [
+        IsAuthenticated,
+        IsCoach,
+    ]
+
+    def get(self, request, program_pk):
+
+        # Find the coach's program.
+        program = get_object_or_404(
+            Program,
+            pk=program_pk,
+            created_by=request.user,
+            is_deleted=False,
+        )
+
+        # Find active questions for this program type.
+        questions = TemplateQuestion.objects.filter(
+            template__program_type=program.program_type,
+            template__is_active=True,
+            is_active=True,
+        ).order_by(
+            "order",
+            "id",
+        )
+
+        serializer = CoachTemplateQuestionSerializer(
+            questions,
+            many=True,
+        )
+
+        # Check whether this program already has a questionnaire.
+        already_assigned = (
+            ProgramQuestionnaire.objects.filter(
+                program=program,
+            ).exists()
+        )
+
+        return Response(
+            {
+                "program_id": program.id,
+                "program_type": program.program_type,
+                "questionnaire_already_assigned": already_assigned,
+                "questions": serializer.data,
             },
             status=status.HTTP_200_OK,
         )
