@@ -37,3 +37,11 @@ class PaymentGateway(ABC):
         expected_amount_irr: int,
     ) -> PaymentVerificationResult:
         pass
+    
+    
+class GatewayStartRejected(Exception):
+    """
+    The gateway explicitly rejected payment initiation.
+    No payment session was created.
+    """
+    pass

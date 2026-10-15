@@ -2,7 +2,7 @@
 from rest_framework import serializers
 
 from programs.models import Program
-from .models import PurchaseOrder
+from .models import PurchaseOrder,PaymentAttempt
 
 
 class PurchaseOrderCreateSerializer(serializers.Serializer):
@@ -37,6 +37,25 @@ class PurchaseOrderReadSerializer(serializers.ModelSerializer):
             "status",
             "program",
             "created_at",
+        )
+
+        read_only_fields = fields
+        
+        
+        
+class PaymentAttemptReadSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PaymentAttempt
+
+        fields = (
+            "id",
+            "tracking_id",
+            "provider",
+            "amount_irr",
+            "status",
+            "created_at",
+            "verified_at",
         )
 
         read_only_fields = fields
