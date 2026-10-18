@@ -4,6 +4,7 @@ from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
 )
+from rest_framework.exceptions import ValidationError
 
 from rest_framework.permissions import (
     BasePermission,
@@ -26,26 +27,24 @@ from .student_serializers import (
 
 from .services import expire_due_programs
 
-
 # ---------------------------------------
 # Student Permission
 # ---------------------------------------
+
 
 class IsStudent(BasePermission):
 
     message = "فقط شاگردان به این بخش دسترسی دارند."
 
     def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and request.user.role == "STUDENT"
-        )
+        return request.user.is_authenticated and request.user.role == "STUDENT"
 
 
 # ---------------------------------------
 # Student Program List
 # GET
 # ---------------------------------------
+
 
 class StudentProgramListView(ListAPIView):
 
@@ -58,17 +57,36 @@ class StudentProgramListView(ListAPIView):
 
     def get_queryset(self):
 
+        # Update expired program statuses.
         expire_due_programs()
 
-        return Program.objects.filter(
+        # Optional status filter.
+        requested_status = self.request.query_params.get("status")
+
+        # Only known program statuses are allowed.
+        if (
+            requested_status is not None
+            and requested_status not in Program.Status.values
+        ):
+            raise ValidationError({"status": "وضعیت برنامه معتبر نیست."})
+
+        # Only the student's own non-deleted programs.
+        queryset = Program.objects.filter(
             student__user=self.request.user,
             is_deleted=False,
-            status__in=[
-                Program.Status.ACTIVE,
-                Program.Status.EXPIRED,
-            ],
+        )
+
+        # Apply filter only when requested.
+        if requested_status is not None:
+            queryset = queryset.filter(
+                status=requested_status,
+            )
+
+        return queryset.select_related(
+            "questionnaire",
         ).order_by(
-            "-published_at",
+            "-created_at",
+            "-id",
         )
 
 
@@ -76,6 +94,7 @@ class StudentProgramListView(ListAPIView):
 # Student Program Detail
 # GET
 # ---------------------------------------
+
 
 class StudentProgramDetailView(RetrieveAPIView):
 
@@ -97,9 +116,11 @@ class StudentProgramDetailView(RetrieveAPIView):
         active_exercises = (
             ProgramExercise.objects.filter(
                 is_deleted=False,
-            ).select_related(
+            )
+            .select_related(
                 "exercise",
-            ).prefetch_related(
+            )
+            .prefetch_related(
                 "exercise__media",
             )
         )
@@ -111,10 +132,12 @@ class StudentProgramDetailView(RetrieveAPIView):
         active_workout_days = (
             ProgramDay.objects.filter(
                 is_deleted=False,
-            ).order_by(
+            )
+            .order_by(
                 "order",
                 "id",
-            ).prefetch_related(
+            )
+            .prefetch_related(
                 Prefetch(
                     "exercises",
                     queryset=active_exercises,
@@ -126,13 +149,11 @@ class StudentProgramDetailView(RetrieveAPIView):
         # Active nutrition food items
         # -----------------------------------
 
-        active_food_items = (
-            NutritionFoodItem.objects.filter(
-                is_deleted=False,
-            ).order_by(
-                "order",
-                "id",
-            )
+        active_food_items = NutritionFoodItem.objects.filter(
+            is_deleted=False,
+        ).order_by(
+            "order",
+            "id",
         )
 
         # -----------------------------------
@@ -142,10 +163,12 @@ class StudentProgramDetailView(RetrieveAPIView):
         active_meals = (
             NutritionMeal.objects.filter(
                 is_deleted=False,
-            ).order_by(
+            )
+            .order_by(
                 "order",
                 "id",
-            ).prefetch_related(
+            )
+            .prefetch_related(
                 Prefetch(
                     "food_items",
                     queryset=active_food_items,
@@ -160,10 +183,12 @@ class StudentProgramDetailView(RetrieveAPIView):
         active_nutrition_days = (
             NutritionDay.objects.filter(
                 is_deleted=False,
-            ).order_by(
+            )
+            .order_by(
                 "order",
                 "id",
-            ).prefetch_related(
+            )
+            .prefetch_related(
                 Prefetch(
                     "meals",
                     queryset=active_meals,
@@ -183,15 +208,12 @@ class StudentProgramDetailView(RetrieveAPIView):
                 Program.Status.EXPIRED,
             ],
         ).prefetch_related(
-
             Prefetch(
                 "days",
                 queryset=active_workout_days,
             ),
-
             Prefetch(
                 "nutrition_days",
                 queryset=active_nutrition_days,
             ),
-
         )

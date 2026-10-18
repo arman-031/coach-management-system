@@ -5,8 +5,8 @@ from .views import (
     StudentOrderListView,
     StudentOrderPaymentsView,
     StudentStartPaymentView,
+    ZarinpalCallbackView,
 )
-
 
 urlpatterns = [
     path(
@@ -14,7 +14,6 @@ urlpatterns = [
         StudentOrderCreateView.as_view(),
         name="student-order-create",
     ),
-
     path(
         "my/",
         StudentOrderListView.as_view(),
@@ -29,5 +28,10 @@ urlpatterns = [
         "my/<int:order_id>/payments/start/",
         StudentStartPaymentView.as_view(),
         name="student-start-payment",
+    ),
+    path(
+        "payments/zarinpal/callback/",
+        ZarinpalCallbackView.as_view(),
+        name="zarinpal-callback",
     ),
 ]

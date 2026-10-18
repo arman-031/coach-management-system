@@ -1,8 +1,11 @@
-
 from rest_framework import serializers
 
 from programs.models import Program
-from .models import PurchaseOrder,PaymentAttempt
+from .models import PurchaseOrder, PaymentAttempt
+
+# ==========================================
+# 1. Create Purchase Order
+# ==========================================
 
 
 class PurchaseOrderCreateSerializer(serializers.Serializer):
@@ -17,15 +20,31 @@ class PurchaseOrderCreateSerializer(serializers.Serializer):
             unexpected = set(data) - {"program_type"}
 
             if unexpected:
-                raise serializers.ValidationError({
-                    field: "ارسال این فیلد مجاز نیست."
-                    for field in unexpected
-                })
+                raise serializers.ValidationError(
+                    {field: "ارسال این فیلد مجاز نیست." for field in unexpected}
+                )
 
         return super().to_internal_value(data)
 
 
+# ==========================================
+# 2. Read Purchase Order
+# ==========================================
+
+
 class PurchaseOrderReadSerializer(serializers.ModelSerializer):
+
+    program_status = serializers.CharField(
+        source="program.status",
+        read_only=True,
+        allow_null=True,
+    )
+
+    program_status_display = serializers.CharField(
+        source="program.get_status_display",
+        read_only=True,
+        allow_null=True,
+    )
 
     class Meta:
         model = PurchaseOrder
@@ -36,13 +55,19 @@ class PurchaseOrderReadSerializer(serializers.ModelSerializer):
             "amount_irr",
             "status",
             "program",
+            "program_status",
+            "program_status_display",
             "created_at",
         )
 
         read_only_fields = fields
-        
-        
-        
+
+
+# ==========================================
+# 3. Read Payment Attempts
+# ==========================================
+
+
 class PaymentAttemptReadSerializer(serializers.ModelSerializer):
 
     class Meta:

@@ -76,11 +76,16 @@ class StudentQuestionnaireAnswerView(APIView):
     @transaction.atomic
     def patch(self, request, program_pk, item_pk):
 
+        program = get_object_or_404(
+            Program.objects.select_for_update(),
+            pk=program_pk,
+            student__user=request.user,
+            is_deleted=False,
+        )
+
         questionnaire = get_object_or_404(
             ProgramQuestionnaire.objects.select_for_update(),
-            program_id=program_pk,
-            program__student__user=request.user,
-            program__is_deleted=False,
+            program=program,
         )
 
         if questionnaire.status not in (
@@ -94,7 +99,18 @@ class StudentQuestionnaireAnswerView(APIView):
                 )
             })
 
-        if questionnaire.program.status not in (
+        if (
+            questionnaire.status
+            == ProgramQuestionnaire.Status.REVISION_REQUESTED
+            and not questionnaire.revision_reason.strip()
+        ):
+            raise ValidationError({
+                "detail": (
+                    "درخواست اصلاح معتبر برای این پرسش‌نامه ثبت نشده است."
+                )
+            })
+
+        if program.status not in (
             Program.Status.WAITING,
             Program.Status.PREPARING,
         ):
@@ -173,15 +189,17 @@ class StudentQuestionnaireSubmitView(APIView):
     @transaction.atomic
     def post(self, request, program_pk):
 
-        # Find and lock the student's questionnaire.
-        questionnaire = get_object_or_404(
-            ProgramQuestionnaire.objects
-            .select_related("program")
-            .select_for_update(),
+        # Lock the program before the questionnaire, matching coach updates.
+        program = get_object_or_404(
+            Program.objects.select_for_update(),
+            pk=program_pk,
+            student__user=request.user,
+            is_deleted=False,
+        )
 
-            program_id=program_pk,
-            program__student__user=request.user,
-            program__is_deleted=False,
+        questionnaire = get_object_or_404(
+            ProgramQuestionnaire.objects.select_for_update(),
+            program=program,
         )
 
         # Check questionnaire status.
@@ -199,7 +217,20 @@ class StudentQuestionnaireSubmitView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        program = questionnaire.program
+        if (
+            questionnaire.status
+            == ProgramQuestionnaire.Status.REVISION_REQUESTED
+            and not questionnaire.revision_reason.strip()
+        ):
+            return Response(
+                {
+                    "detail": (
+                        "درخواست اصلاح معتبر برای این پرسش‌نامه "
+                        "ثبت نشده است."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Check program status.
         if program.status not in (

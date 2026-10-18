@@ -4,13 +4,20 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import re
+
+from rest_framework.permissions import AllowAny
 
 
 from django.conf import settings
 from django.core.exceptions import ValidationError as DjangoValidationError
 
 from .gateways.registry import get_active_gateway
-from .payment_services import start_order_payment
+from .payment_services import (
+    start_order_payment,
+    verify_order_payment,
+    PaymentNotConfirmed,
+)
 from accounts.models import User
 from accounts.permissions import IsStudent
 from students.models import StudentProfile
@@ -140,7 +147,6 @@ class StudentOrderPaymentsView(ListAPIView):
         )
 
 
-
 class StudentStartPaymentView(APIView):
 
     permission_classes = [
@@ -160,18 +166,14 @@ class StudentStartPaymentView(APIView):
         # Step 2: Reject unexpected request data.
         if request.data:
             return Response(
-                {
-                    "detail": "این درخواست نباید بدنه داشته باشد."
-                },
+                {"detail": "این درخواست نباید بدنه داشته باشد."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # Step 3: Only pending orders can be paid.
         if order.status != PurchaseOrder.Status.PENDING:
             return Response(
-                {
-                    "detail": "این سفارش قابل پرداخت نیست."
-                },
+                {"detail": "این سفارش قابل پرداخت نیست."},
                 status=status.HTTP_409_CONFLICT,
             )
 
@@ -180,9 +182,7 @@ class StudentStartPaymentView(APIView):
 
         if active_gateway is None:
             return Response(
-                {
-                    "detail": "درگاه پرداخت هنوز فعال نشده است."
-                },
+                {"detail": "درگاه پرداخت هنوز فعال نشده است."},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
@@ -197,9 +197,7 @@ class StudentStartPaymentView(APIView):
 
         if not callback_url:
             return Response(
-                {
-                    "detail": "آدرس بازگشت پرداخت تنظیم نشده است."
-                },
+                {"detail": "آدرس بازگشت پرداخت تنظیم نشده است."},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
@@ -215,9 +213,7 @@ class StudentStartPaymentView(APIView):
         # Handle order validation errors.
         except DjangoValidationError as exc:
             return Response(
-                {
-                    "detail": exc.messages
-                },
+                {"detail": exc.messages},
                 status=status.HTTP_409_CONFLICT,
             )
 
@@ -243,4 +239,112 @@ class StudentStartPaymentView(APIView):
                 "payment_url": result.payment_url,
             },
             status=status.HTTP_201_CREATED,
+        )
+
+
+class ZarinpalCallbackView(APIView):
+    """
+    Handle Zarinpal browser callback.
+
+    Callback parameters are not trusted.
+    Only server-side verification can complete an order.
+    """
+
+    # The gateway redirects the browser here.
+    # A student JWT is not required for this endpoint.
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+
+        # Step 1: Read callback parameters.
+        authority = request.query_params.get("Authority")
+        payment_status = request.query_params.get("Status")
+
+        if (
+            not isinstance(authority, str)
+            or not re.fullmatch(
+                r"[A-Za-z0-9]{1,150}",
+                authority,
+            )
+            or payment_status not in ("OK", "NOK")
+        ):
+            return Response(
+                {"detail": "اطلاعات بازگشت از درگاه معتبر نیست."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Step 2: Only the trusted Zarinpal gateway is allowed.
+        active_gateway = get_active_gateway()
+
+        if active_gateway is None:
+            return Response(
+                {"detail": "درگاه پرداخت فعال نیست."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        provider, gateway = active_gateway
+
+        if provider != "ZARINPAL":
+            return Response(
+                {"detail": "درگاه پرداخت معتبر نیست."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        # Step 3: Match authority with our database.
+        attempt = get_object_or_404(
+            PaymentAttempt,
+            provider="ZARINPAL",
+            gateway_authority=authority,
+        )
+
+        # Step 4: NOK is not proof of a settled failure.
+        # Do not mark FAILED or allow a new payment here.
+        if payment_status == "NOK":
+            return Response(
+                {
+                    "detail": (
+                        "پرداخت از سمت درگاه تأیید نشده است. "
+                        "وضعیت تراکنش برای بررسی حفظ شد."
+                    )
+                },
+                status=status.HTTP_202_ACCEPTED,
+            )
+
+        # Step 5: Verify payment on the server.
+        try:
+            verified_attempt = verify_order_payment(
+                attempt_id=attempt.id,
+                gateway=gateway,
+            )
+
+        except PaymentNotConfirmed:
+            return Response(
+                {"detail": "پرداخت هنوز تأیید نشده است."},
+                status=status.HTTP_202_ACCEPTED,
+            )
+
+        except (TimeoutError, ConnectionError):
+            return Response(
+                {
+                    "detail": (
+                        "ارتباط با درگاه برقرار نشد. " "وضعیت پرداخت نیازمند بررسی است."
+                    )
+                },
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        except DjangoValidationError:
+            return Response(
+                {"detail": "وضعیت تراکنش نیازمند بررسی است."},
+                status=status.HTTP_409_CONFLICT,
+            )
+
+        # Step 6: Return success only after verification.
+        return Response(
+            {
+                "detail": "پرداخت با موفقیت تأیید شد.",
+                "payment_status": verified_attempt.status,
+            },
+            status=status.HTTP_200_OK,
         )
