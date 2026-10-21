@@ -22,7 +22,7 @@
   <g filter="url(#shadow)">
     <rect x="85" y="320" width="380" height="350" rx="28" fill="#ffffff"/>
     <text x="125" y="370" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="30" font-weight="800" fill="#10233f">Programs</text>
-    <text x="125" y="400" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#b06a24">PLANNED WORKFLOWS</text>
+    <text x="125" y="400" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#b06a24">IMPLEMENTED API</text>
     <circle cx="140" cy="455" r="22" fill="#eaf1ff"/><text x="180" y="451" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#18314f">Bodybuilding</text><text x="180" y="478" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17" fill="#66798e">Training plans + exercise selection</text>
     <circle cx="140" cy="535" r="22" fill="#e4f7ef"/><text x="180" y="531" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#18314f">Nutrition</text><text x="180" y="558" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17" fill="#66798e">Structured nutrition programs</text>
     <circle cx="140" cy="615" r="22" fill="#f2eafe"/><text x="180" y="611" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="700" fill="#18314f">Corrective</text><text x="180" y="638" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17" fill="#66798e">Corrective movement programs</text>
