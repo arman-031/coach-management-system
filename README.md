@@ -4,6 +4,8 @@
 
 # Coach Management System
 
+[![Django API CI](https://github.com/arman-031/coach-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/arman-031/coach-management-system/actions/workflows/ci.yml)
+
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
 A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, questionnaires, core program workflows, and gateway-independent test payment services are implemented. The project remains under active development. Nutrition day/meal/food-item APIs, a coach dashboard statistics endpoint, and Zarinpal sandbox payment initiation/callback endpoints now exist. A production payment gateway, complete frontend dashboards, scheduled notifications, and deployment remain unfinished.
@@ -48,7 +50,7 @@ A **Persian-first coaching management platform** built with Django REST Framewor
 - Payment notifications and reconciliation
 - Inactivity follow-up and notification workflows
 - Coach/student dashboard frontend and student dashboard API (a coach statistics API is implemented)
-- GitHub Actions CI and further regression coverage
+- Additional regression coverage and measured coverage reporting
 - Production deployment and external media storage
 
 Implemented here means present in the source code, not that the product is complete or production-ready.
@@ -426,7 +428,7 @@ python manage.py showmigrations
 python manage.py test
 ```
 
-Run the order/payment suite with `python manage.py test orders -v 2`. The full `python manage.py test` command also runs program, questionnaire, and student API tests; it must be pointed at an **isolated test PostgreSQL database**. Automated tests are present, but complete coverage is not established.
+Run the order/payment suite with `python manage.py test orders -v 2`. The full `python manage.py test` command also runs program, questionnaire, and student API tests; it must be pointed at an **isolated test PostgreSQL database**. The [GitHub Actions workflow](.github/workflows/ci.yml) runs checks and automated tests against an ephemeral PostgreSQL service. It cannot access the developer's local data. Complete coverage has not been measured.
 
 ## Roadmap
 
@@ -458,7 +460,8 @@ Run the order/payment suite with `python manage.py test orders -v 2`. The full `
 - [ ] Coach dashboard frontend
 - [ ] Student dashboard
 - [x] Automated regression tests for orders, programs, questionnaires, and student data isolation
-- [ ] GitHub Actions CI and broader coverage
+- [x] GitHub Actions CI against a disposable PostgreSQL service
+- [ ] Coverage measurement and additional edge-case regression tests
 - [ ] Production deployment
 - [ ] Production media storage
 
