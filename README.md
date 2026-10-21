@@ -6,7 +6,7 @@
 
 > 🚧 **Active Development** — This project is currently being built incrementally. Implemented features are clearly separated from planned work.
 
-A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, questionnaires, core program workflows, and gateway-independent test payment services are implemented. The project is still under active development; live bank integration, detailed nutrition planning, notifications, dashboards, and production deployment remain future work.
+A **Persian-first coaching management platform** built with Django REST Framework and PostgreSQL. The goal is to give coaches one place to manage **online and in-person students**, create **bodybuilding, nutrition, and corrective programs**, and attach **video, GIF, or image guidance** to exercises so students can follow their plans more easily. Authentication, student management, the exercise library, questionnaires, core program workflows, and gateway-independent test payment services are implemented. The project remains under active development. Nutrition day/meal/food-item APIs, a coach dashboard statistics endpoint, and Zarinpal sandbox payment initiation/callback endpoints now exist. A production payment gateway, complete frontend dashboards, scheduled notifications, and deployment remain unfinished.
 
 ## Tech Stack
 
@@ -38,21 +38,21 @@ A **Persian-first coaching management platform** built with Django REST Framewor
 - Student purchase-order creation and order-history APIs
 - Purchase and renewal fulfillment, including first-purchase questionnaire setup and renewal preparation
 - Gateway-independent payment contracts, payment-attempt tracking, and a fake test gateway
-- Eight automated order/payment regression tests
+- Automated regression tests for orders and payments, programs, questionnaires, and coach/student data isolation
 
 ### Remaining work
-- Detailed nutrition-plan content (the `NUTRITION` program type exists, but meal planning is not implemented)
+- Complete nutrition-plan product experience (day, meal, and food-item APIs are implemented, but full UI and workflow validation remain)
 - Further validation and completion of bodybuilding/corrective workflows
 - Scheduled expiration processing; current expiration checks run when selected program endpoints are read
-- Live bank gateway integration and public payment initiation/callback endpoints
+- Production bank payment integration (feature-flagged Zarinpal **sandbox** initiation/callback routes are implemented)
 - Payment notifications and reconciliation
 - Inactivity follow-up and notification workflows
-- Coach and student dashboards
-- Broader automated regression coverage and CI
+- Coach/student dashboard frontend and student dashboard API (a coach statistics API is implemented)
+- GitHub Actions CI and further regression coverage
 - Production deployment and external media storage
 
 Implemented here means present in the source code, not that the product is complete or production-ready.
-The eight tests in `orders/tests.py` cover purchase fulfillment, renewals, idempotency, and the fake-gateway payment flow. Most other app test modules remain placeholders; this is not comprehensive regression coverage.
+Automated tests now cover purchase fulfillment, renewals, idempotency, the fake and Zarinpal sandbox gateway behavior, access restrictions, program/dashboard responses, questionnaires, and coach/student data isolation. Some test modules remain placeholders and test coverage has not been measured; this is not a production-readiness claim.
 
 ## Architecture
 
@@ -245,9 +245,7 @@ Content-Type: application/json
 
 ## Manual Testing with Postman
 
-The project is still under construction. Eight automated order/payment regression tests
-are present; most other app `tests.py` files are placeholders. Manual API checks in
-Postman remain useful but do not establish full test coverage.
+The project is still under construction. Automated tests exist in `orders/tests.py`, `programs/tests.py`, `questionnaires/tests.py`, and `students/test_coach_overview.py`, but some other test modules remain placeholders. Manual checks in Postman are useful and do not establish full coverage.
 
 An exported Postman collection, real response screenshots, and a recorded verification
 checklist can be added to the repository later. This README does not claim that every
@@ -310,9 +308,7 @@ app supports these core operations:
 - Let students read their own `ACTIVE` and `EXPIRED` programs; drafts and deleted content are excluded.
 - Include exercise descriptions and media in session/exercise responses.
 
-The nutrition type currently identifies a program; it does not yet provide meals,
-food items, or a complete nutrition-plan editor. Expired programs provide a basis for
-student program history, rather than a separate completed archive product.
+Nutrition programs now support nested nutrition days, meals, and food items with coach-scoped creation, editing, soft deletion, and restoration endpoints. This is an API foundation, not a completed nutrition-planning product or frontend editor. Expired programs support student history; a separate finished archive UI is not yet implemented.
 
 ### Current program routes
 
@@ -345,12 +341,9 @@ start/verification from the provider through a gateway interface. A fake gateway
 automated tests, and verified purchases trigger the initial questionnaire or renewal
 preparation workflow.
 
-This is a gateway-independent **test foundation**, not a live payment integration: no
-bank gateway is connected, and public payment initiation/callback endpoints are not yet
-implemented. Do not use the fake gateway for real payments.
+The project now includes **feature-flagged Zarinpal sandbox-only** payment initiation and callback endpoints with server-side verification, plus guarded retry and reconciliation logic. The registry explicitly refuses non-sandbox/production configuration. This is **not a live production payment integration**; no real payments should be processed.
 
-Follow-up notifications, dashboards, full nutrition planning, and production media
-delivery remain future work.
+Follow-up notifications, full dashboard user interfaces, additional nutrition workflow validation, and production media delivery remain future work. The coach statistics endpoint already exists at `/api/programs/coach/dashboard/`.
 
 ## Local Setup
 
@@ -433,10 +426,7 @@ python manage.py showmigrations
 python manage.py test
 ```
 
-Run the payment and order regression suite with `python manage.py test orders -v 2`.
-The broader `python manage.py test` command also runs the other apps, whose test modules
-are mostly placeholders. Automated tests and CI do not yet provide comprehensive
-regression coverage.
+Run the order/payment suite with `python manage.py test orders -v 2`. The full `python manage.py test` command also runs program, questionnaire, and student API tests; it must be pointed at an **isolated test PostgreSQL database**. Automated tests are present, but complete coverage is not established.
 
 ## Roadmap
 
@@ -458,13 +448,17 @@ regression coverage.
 - [x] Questionnaire submission and coach review/revision workflows
 - [x] Order creation/history and gateway-independent payment services
 - [x] Fake-gateway payment flow and order regression tests
-- [ ] Complete nutrition-plan content
+- [x] Nutrition day, meal, and food-item API foundations
+- [ ] Full nutrition-planning UX and comprehensive workflow validation
 - [ ] Scheduled expiration processing
-- [ ] Real bank gateway and public payment initiation/callback endpoints
+- [x] Feature-flagged Zarinpal sandbox initiation/callback APIs, verification, and reconciliation support
+- [ ] Production bank gateway enablement and live payment operations
 - [ ] Notification workflows
-- [ ] Coach dashboard
+- [x] Coach dashboard statistics API
+- [ ] Coach dashboard frontend
 - [ ] Student dashboard
-- [ ] Broader automated regression suite and CI
+- [x] Automated regression tests for orders, programs, questionnaires, and student data isolation
+- [ ] GitHub Actions CI and broader coverage
 - [ ] Production deployment
 - [ ] Production media storage
 
@@ -474,7 +468,7 @@ regression coverage.
 - `.env.example` contains placeholders only
 - Database credentials are environment-based
 - Local databases, virtual environments, uploaded media, editor files, and dumps are excluded from Git
-- No stable development signing key is committed
+- No stable development signing key is committed. **Production must explicitly set a persistent `SECRET_KEY`: the current fallback generates a new key on restart when the variable is missing.**
 - `DJANGO_DEBUG` defaults to `False` unless explicitly enabled
 
 ## Project Goal
